@@ -19,11 +19,11 @@ class CardUpdater(object):
 		self.card  = card
 
 	def _fix_card(self):
-		log(f"..[*] found {self.card.board.name} : {self.card.name}")
+		log(f"..[*] found card in board \"{self.card.board.name}\" : \"{self.card.name}\"")
 
 		log(f"....[*] setting attachment to card: {self.card.description}")
-		card.attach(url=self.card.description)
-		card.set_description('')
+		self.card.attach(url=self.card.description)
+		self.card.set_description('')
 
 
 	def update_card(self):

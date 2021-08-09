@@ -42,12 +42,15 @@ def get_client():
 #
 
 def get_item(all_list, item_name):
-	return next(
-		filter(
-			lambda i: i.name == item_name,
-			all_list
+	try:
+		return next(
+			filter(
+				lambda i: i.name == item_name,
+				all_list
+			)
 		)
-	)
+	except:
+		return None
 
 
 def is_labeled(card, label_name=None):

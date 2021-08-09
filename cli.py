@@ -38,9 +38,12 @@ def editor():
 	click.echo("editing")
 	click.echo("\te.g. edditing date for a friend")
 
+cli.add_command(updater)
+cli.add_command(editor)
 
-def main(args_list=None):
+def main():
 	print("[*] I'm in cli.main")
+	cli()
 
 def test(args=None, debug=False):
 	print("[*] test")

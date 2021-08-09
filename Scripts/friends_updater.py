@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
 
-import os
-import sys
-
-
 from TrelloScripts.consts                import *
 from TrelloScripts.log                   import log, log_initialize
 from TrelloScripts.utils                 import *
