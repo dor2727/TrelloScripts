@@ -2,9 +2,6 @@ import os
 
 MAIN_FOLDER = os.path.dirname(__file__)
 
-LOGFILE = os.path.join(MAIN_FOLDER, "Logs/main_log")
-
-
 # key is common-name, value is trello-name
 ORGANIZATIONS = {
 	"Blog"              : "blog75891337"    ,

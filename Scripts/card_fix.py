@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from TrelloScripts.consts                import *
-from TrelloScripts.log                   import log, log_initialize
+from TrelloScripts.log                   import log, log_initialize, set_logfile
 from TrelloScripts.utils                 import *
 from TrelloScripts.Classes.TitleFix      import CardUpdater as TitleCardUpdater
 from TrelloScripts.Classes.AttachmentFix import CardUpdater as AttachmentCardUpdater
@@ -10,6 +10,8 @@ set_verbose(10)
 
 
 def main():
+	set_logfile("card_fix")
+
 	log_initialize()
 
 	client = get_client()

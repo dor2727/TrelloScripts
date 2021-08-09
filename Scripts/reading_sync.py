@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 from TrelloScripts.consts                import *
-from TrelloScripts.log                   import log, log_initialize
+from TrelloScripts.log                   import log, log_initialize, set_logfile
 from TrelloScripts.utils                 import *
 
-set_verbose(10)
+set_verbose(20)
 
 """
 TODO
@@ -20,9 +20,43 @@ Similarly for "Reading" and "Reading - Backlog"
 
 """
 
-def sync_boards(source, dest, label_name):
-	log(f".[*] Synching : \"{source.name}\" --> \"{dest.name}\"")
-	pass
+
+def sync_boards(source_board, dest_board, label_name):
+	log(f".[*] Synching : \"{source_board.name}\" --> \"{dest_board.name}\"")
+
+	label = get_item(source_board.get_labels(), label_name)
+	dest_lists = dest_board.all_lists()
+
+	log("...[*] Iterating cards")
+	counter = 0
+
+	for c in source_board.all_cards():
+		if is_labeled(c, label_name):
+			log(f".....[*] found card - {c.name} - {label_name}")
+
+			# remove the label
+			log(".........[*] Removing label")
+			c.remove_label(label)
+
+			# find the dest list
+			log(".........[*] Getting destination list")
+			list_name = c.get_list().name
+
+			destination_list = get_item(dest_lists, list_name)
+			if destination_list is None:
+				log(".............[*] Creating destination list")
+				destination_list = dest_board.add_list(list_name, "bottom")
+				# update the variable
+				dest_lists = dest_board.all_lists()
+
+			log(".........[*] Changing board")
+			c.change_board(dest_board.id, destination_list.id)
+
+			log(".........[*] Done")
+			counter += 1
+
+	log(f"...[*] moved {counter} cards")
+
 
 def sync(board_reading, board_done, board_backlog):
 	# sync reading -> done
@@ -48,6 +82,8 @@ def get_board_triplet(board_name, boards):
 	return board_reading, board_done, board_backlog
 
 def main():
+	set_logfile("reading_sync")
+
 	log_initialize()
 
 	client = get_client()

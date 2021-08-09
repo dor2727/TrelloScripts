@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from TrelloScripts.consts                import *
-from TrelloScripts.log                   import log, log_initialize
+from TrelloScripts.log                   import log, log_initialize, set_logfile
 from TrelloScripts.utils                 import *
 from TrelloScripts.Classes.FriendUpdater import CardUpdater
 
@@ -10,6 +10,8 @@ set_verbose(4)
 
 
 def main():
+	set_logfile("friends_updater")
+
 	log_initialize()
 
 	client = get_client()
