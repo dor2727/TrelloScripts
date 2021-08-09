@@ -5,7 +5,6 @@ from TrelloScripts.consts import *
 VERBOSE = 1000
 def set_verbose(verbose):
 	global VERBOSE
-	print(f"setting verbose to {verbose}")
 	VERBOSE = verbose
 
 

@@ -23,13 +23,18 @@ def read(filename):
 #
 # Client utils
 #
+CLIENT = None
 def get_client():
-	client = TrelloClient(
-		api_key    = read("key"),
-		api_secret = read("secret"),
-		token      = read("token"),
-	)
-	return client
+	global CLIENT
+
+	if CLIENT is None:
+		CLIENT = TrelloClient(
+			api_key    = read("key"),
+			api_secret = read("secret"),
+			token      = read("token"),
+		)
+
+	return CLIENT
 
 
 #

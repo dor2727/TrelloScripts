@@ -1,0 +1,9 @@
+friends_updater
+	daily
+
+card_fix
+	bi-weekly
+
+reading_sync
+	bi-weekly
+
