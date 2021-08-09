@@ -1,0 +1,21 @@
+import datetime
+from TrelloScripts.consts import *
+
+
+VERBOSE = 1000
+def set_verbose(verbose):
+	global VERBOSE
+	print(f"setting verbose to {verbose}")
+	VERBOSE = verbose
+
+
+def log(s):
+	if s.count('.') <= VERBOSE:
+		print(s)
+		f = open(LOGFILE, 'a')
+		f.write('\n' + s)
+		f.close()
+
+def log_initialize():
+	log("-------------")
+	log(datetime.datetime.now().strftime("%Y/%m/%d %H:%M"))

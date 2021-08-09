@@ -1,32 +1,14 @@
 #!/usr/bin/env python3
 from trello import TrelloClient
 import os
-import datetime
 
-VERBOSE = 1000
-def set_verbose(verbose):
-	global VERBOSE
-	VERBOSE = verbose
+from TrelloScripts.consts import *
+from TrelloScripts.log import log, set_verbose
 
-MAIN_FOLDER = "/home/me/Dropbox/Projects/Trello2"
 
 #
 # File utils
 #
-
-LOGFILE = os.path.join(MAIN_FOLDER, "Logs/main_log")
-
-def log(s):
-	if s.count('.') <= VERBOSE:
-		print(s)
-		f = open(LOGFILE, 'a')
-		f.write('\n' + s)
-		f.close()
-
-def log_initialize():
-	log("-------------")
-	log(datetime.datetime.now().strftime("%Y/%m/%d %H:%M"))
-
 
 def read(filename):
 	try:
@@ -48,6 +30,7 @@ def get_client():
 		token      = read("token"),
 	)
 	return client
+
 
 #
 # Card utils
@@ -75,7 +58,7 @@ def is_labeled(card, label_name=None):
 		return bool(card.labels)
 
 
-
+# TODO: fix this one
 def move_boards(all_boards, source_board_name, dest_board_name, label_name):
 	log(f"[*] Moving cards : {source_board_name} --> {dest_board_name}")
 	for subject in SUBJECTS:

@@ -1,0 +1,9 @@
+change labels
+
+This week          - was ""
+more than a week   - was "last 14 days"
+more than 2 weeks  - was "last month"
+more than a month  - was ""
+more than 2 months - was ""
+more than 6 months - was ""
+more than a year   - was ""
