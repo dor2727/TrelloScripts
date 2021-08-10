@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
-from trello import TrelloClient
+
 import os
 import json
 import datetime
+
+from TrelloScripts.consts                import *
+from TrelloScripts.log                   import log, log_initialize, set_logfile
+from TrelloScripts.utils                 import *
 
 
 EXPORT_PARAMETERS = {
@@ -24,7 +28,7 @@ EXPORT_PARAMETERS = {
 }
 
 def export_board(client, folder_name, board):
-	log(f"    [*] Exporting {board.name} - {board.id}")
+	log(f"..[*] Exporting {board.name} - {board.id}")
 
 
 	# getting the board full data as json
@@ -64,7 +68,7 @@ def export_board(client, folder_name, board):
 	)
 
 	c = file.write(json.dumps(json_data, indent = 2, separators=(',', ': ')))
-	print(f"        [*] wrote {c:7} bytes")
+	print(f"....[*] wrote {c:7} bytes")
 	file.close()
 
 def initialize_export_folder():
