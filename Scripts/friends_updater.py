@@ -10,7 +10,7 @@ set_verbose(4)
 
 
 def main():
-	set_logfile("friends_updater")
+	set_logfile("friends_updater.log")
 
 	log_initialize()
 

@@ -10,7 +10,7 @@ set_verbose(10)
 
 
 def main():
-	set_logfile("card_fix")
+	set_logfile("card_fix.log")
 
 	log_initialize()
 

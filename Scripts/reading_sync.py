@@ -82,7 +82,7 @@ def get_board_triplet(board_name, boards):
 	return board_reading, board_done, board_backlog
 
 def main():
-	set_logfile("reading_sync")
+	set_logfile("reading_sync.log")
 
 	log_initialize()
 
