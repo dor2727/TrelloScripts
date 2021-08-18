@@ -6,21 +6,21 @@ from TrelloScripts.utils import get_item
 
 
 LABELS = [
-	"last week",
-	"last 14 days",
-	"last month",
-	"last 2 months",
-	"last 6 months",
-	"last year",
+	"Last week",
+	"More than a week",
+	"More than 2 weeks",
+	"More than a month",
+	"More than 2 months",
+	"More than 6 months",
 	"too much",
 ]
 
-LABEL_WEEK     = "last week"
-LABEL_2_WEEKS  = "last 14 days"
-LABEL_MONTH    = "last month"
-LABEL_2_MONTHS = "last 2 months"
-LABEL_6_MONTHS = "last 6 months"
-LABEL_YEAR     = "last year"
+LABEL_WEEK     = "Last week"
+LABEL_2_WEEKS  = "More than a week"
+LABEL_MONTH    = "More than 2 weeks"
+LABEL_2_MONTHS = "More than a month"
+LABEL_6_MONTHS = "More than 2 months"
+LABEL_YEAR     = "More than 6 months"
 LABEL_TOO_MUCH = "too much"
 
 
@@ -80,25 +80,25 @@ class CardUpdater(object):
 		log(f"......[*] Last met {delta:3d} days ago")
 
 		if delta <= 7:
-			log(f"....[*] Adding label : last week"    )
+			log(f"....[*] Adding label : {LABEL_WEEK}")
 			self.card.add_label(self.label_week)
 		elif delta <= 14:
-			log(f"....[*] Adding label : last 14 days" )
+			log(f"....[*] Adding label : {LABEL_2_WEEKS}")
 			self.card.add_label(self.label_2_weeks)
 		elif delta <= 30:
-			log(f"....[*] Adding label : last month"   )
+			log(f"....[*] Adding label : {LABEL_MONTH}")
 			self.card.add_label(self.label_month)
 		elif delta <= 30*2:
-			log(f"....[*] Adding label : last 2 months")
+			log(f"....[*] Adding label : {LABEL_2_MONTHS}")
 			self.card.add_label(self.label_2_months)
 		elif delta <= 30*6:
-			log(f"....[*] Adding label : last 6 months")
+			log(f"....[*] Adding label : {LABEL_6_MONTHS}")
 			self.card.add_label(self.label_6_months)
 		elif delta <= 365:
-			log(f"....[*] Adding label : last year"    )
+			log(f"....[*] Adding label : {LABEL_YEAR}")
 			self.card.add_label(self.label_year)
 		else:
-			log(f"....[*] Adding label : too much"     )
+			log(f"....[*] Adding label : {LABEL_TOO_MUCH}")
 			self.card.add_label(self.label_too_much)
 
 	def reorder_dates(self, all_dates=None):
