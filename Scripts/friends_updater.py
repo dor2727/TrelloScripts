@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+import sys
+open("/tmp/sys.path", 'w').write(str(sys.path))
+
 from TrelloScripts.consts                import *
 from TrelloScripts.log                   import log, log_initialize, set_logfile
 from TrelloScripts.utils                 import *
