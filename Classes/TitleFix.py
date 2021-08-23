@@ -45,13 +45,24 @@ class CardUpdater(object):
 
 			if domain == "www.reddit.com":
 				return self._get_name_reddit(url)
-			elif domain in ("www.youtube.com", "youtu.be"):
+			elif domain in ("www.youtube.com", "youtu.be"): # m.youtube.com
 				return self._get_name_youtube(url)
 			else:
-				log(f".....[w] Unrecognized domain. Skipping.")
+				return self._get_name_other(url)
 
 		return None
 
+
+	def _get_name_other(self, url):
+		bs = get_bs(url)
+
+		# in case the request failed.
+		if bs is None:
+			return None
+
+		title = bs.find('title').text
+		log(f".....[*] Setting title: {title}")
+		return title
 
 	def _get_name_reddit(self, url):
 		bs = get_bs(url)
