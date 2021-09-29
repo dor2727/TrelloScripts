@@ -1,17 +1,5 @@
-
-import urllib
-
 from TrelloScripts.log import log
-from TrelloScripts.utils import get_item
-
-
-
-
-def is_url(url):
-	if '\n' in url:
-		return False
-	scheme = urllib.parse.urlparse(url).scheme
-	return scheme in ["https", "http"]
+from TrelloScripts.utils import get_item, is_url
 
 
 class CardUpdater(object):
@@ -35,9 +23,11 @@ class CardUpdater(object):
 
 
 	def update_card(self):
+		# move description to attachment
 		if self.card.description:
 			if is_url(self.card.description):
 				self._fix_card_description()
+
+		# move title to attachment
 		if is_url(self.card.name):
 			self._fix_card_name()
-

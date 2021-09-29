@@ -4,6 +4,7 @@ import os
 
 from TrelloScripts.consts import *
 from TrelloScripts.log import log, set_verbose
+from TrelloScripts.utils_web import read_link, is_url
 
 
 #
@@ -64,4 +65,3 @@ def is_labeled(card, label_name=None):
 	# Otherwise, simply check if there are any labels
 	else:
 		return bool(card.labels)
-
