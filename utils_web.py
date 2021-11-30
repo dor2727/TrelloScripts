@@ -1,6 +1,6 @@
 import urllib
 import requests
-from urllib.parse import urlparse
+from urllib.parse import urlparse, unquote
 from bs4 import BeautifulSoup
 
 from TrelloScripts.log import log
@@ -44,7 +44,10 @@ def read_link(url):
 	elif domain in ("www.youtube.com", "youtu.be"): # m.youtube.com
 		return read_link_youtube(url)
 	else:
-		return read_link_other(url)
+		if url.lower().endswith(".pdf"):
+			return read_link_pdf(url)
+		else:
+			return read_link_other(url)
 
 def read_link_reddit():
 	bs = get_bs(url)
@@ -69,6 +72,9 @@ def read_link_youtube(url):
 	web_page_title = bs.find("title").text
 
 	return web_page_title
+
+def read_link_pdf(url):
+	return unquote(url).split('/')[-1]
 
 def read_link_other(url):
 	bs = get_bs(url)
