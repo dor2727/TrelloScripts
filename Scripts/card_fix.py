@@ -21,7 +21,8 @@ def main():
 	all_boards = client.list_boards()
 	boards = [b for b in all_boards if "Reading"    in b.name] \
 		   + [b for b in all_boards if "Blog"       in b.name] \
-		   + [b for b in all_boards if "Collection" in b.name]
+		   + [b for b in all_boards if "Collection" in b.name] \
+		   + [b for b in all_boards if "Cooking"    in b.name]
 
 
 	log("[*] Fixing Description/Title to Attachment : Iterating cards")

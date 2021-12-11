@@ -106,6 +106,13 @@ def main():
 		boards = get_board_triplet(name, reading_boards)
 		sync(*boards)
 
+	log("[*] Getting Programming boards")
+	sync(
+		get_item(all_boards, f"Programming Projects"),
+		get_item(all_boards, f"Programming Projects - Done"),
+		get_item(all_boards, f"Programming Projects - Backlog"),
+	)
+
 	log("[*] Done")
 
 
