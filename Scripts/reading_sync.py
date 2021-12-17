@@ -113,6 +113,13 @@ def main():
 		get_item(all_boards, f"Programming Projects - Backlog"),
 	)
 
+	log("[*] Getting Cooking boards")
+	sync(
+		get_item(all_boards, f"Cooking"),
+		None,
+		get_item(all_boards, f"Cooking - Backlog"),
+	)
+
 	log("[*] Done")
 
 
