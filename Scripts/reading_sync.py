@@ -74,11 +74,11 @@ def sync(board_reading, board_done, board_backlog):
 		sync_boards(board_reading, board_backlog, "ToBacklog")
 		sync_boards(board_backlog, board_reading, "ToReading")
 
-def get_board_triplet(board_name, boards):
+def get_board_triplet(board_name, boards, prefix=""):
 	# if a board doesn't exist - get_item returns None
-	board_reading = get_item(boards, f"Reading - {board_name}")
-	board_done    = get_item(boards, f"Reading - {board_name} - Done")
-	board_backlog = get_item(boards, f"Reading - {board_name} - Backlog")
+	board_reading = get_item(boards, f"{prefix}{board_name}")
+	board_done    = get_item(boards, f"{prefix}{board_name} - Done")
+	board_backlog = get_item(boards, f"{prefix}{board_name} - Backlog")
 
 	return board_reading, board_done, board_backlog
 
@@ -104,22 +104,13 @@ def main():
 
 	# iterate each name, and sync it.
 	for name in reading_board_names:
-		boards = get_board_triplet(name, reading_boards)
-		sync(*boards)
+		sync(*get_board_triplet(name, reading_boards, prefix="Reading - "))
 
 	log("[*] Getting Programming boards")
-	sync(
-		get_item(all_boards, f"Programming Projects"),
-		get_item(all_boards, f"Programming Projects - Done"),
-		get_item(all_boards, f"Programming Projects - Backlog"),
-	)
+	sync(*get_board_triplet("Programming Projects", all_boards))
 
 	log("[*] Getting Cooking boards")
-	sync(
-		get_item(all_boards, f"Cooking"),
-		None,
-		get_item(all_boards, f"Cooking - Backlog"),
-	)
+	sync(*get_board_triplet("Cooking", all_boards))
 
 	log("[*] Done")
 
