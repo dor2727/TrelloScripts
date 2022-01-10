@@ -27,7 +27,7 @@ def sync_boards(source_board, dest_board, label_name):
 	label = get_item(source_board.get_labels(), label_name)
 	dest_lists = dest_board.all_lists()
 
-	log("...[*] Iterating cards")
+	# log("...[*] Iterating cards")
 	counter = 0
 
 	for c in source_board.all_cards():
@@ -55,7 +55,8 @@ def sync_boards(source_board, dest_board, label_name):
 			log(".........[*] Done")
 			counter += 1
 
-	log(f"...[*] moved {counter} cards")
+	if counter:
+		log(f"...[*] moved {counter} cards")
 
 
 def sync(board_reading, board_done, board_backlog):
