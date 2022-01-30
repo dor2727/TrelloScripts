@@ -60,23 +60,33 @@ class CardUpdater(object):
 			self.label_too_much,
 		]
 
+	@staticmethod
+	def line_to_datetime(line):
+		return datetime.datetime.strptime(line[:10], "%Y/%m/%d")
+
 
 	def get_all_dates(self):
 		# the description is multi-lined,
 		# each line is a date: yyyy/mm/dd
-		return [
-			datetime.datetime.strptime(i, "%Y/%m/%d")
-			for i in self.card.description.splitlines()
-		]
+		# 				   or: yyyy/mm/dd (phone)
+		return map(
+			self.line_to_datetime,
+			self.card.description.splitlines()
+		)
 
 	def remove_date_labels(self):
 		log("......[*] Removing date labels")
 		for label in self.date_labels:
 			self.card.remove_label(label)
 
-	def add_date_label(self, all_dates):
-		date = max(all_dates)
+	def add_date_label(self):
+		try:
+			date = max(self.get_all_dates())
+		except ValueError: # ValueError: max() arg is an empty sequence
+			return
+
 		delta = (self.now - date).days
+
 		log(f"......[*] Last met {delta:3d} days ago")
 
 		if delta <= 7:
@@ -101,26 +111,26 @@ class CardUpdater(object):
 			log(f"....[*] Adding label : {LABEL_TOO_MUCH}")
 			self.card.add_label(self.label_too_much)
 
-	def reorder_dates(self, all_dates=None):
-		all_dates = all_dates or self.get_all_dates()
+	def reorder_dates(self):
 		self.card.set_description(
-			'\n'.join( [
-				i.strftime("%Y/%m/%d")
-				for i in sorted(all_dates, reverse=True)
-			] )
+			'\n'.join(
+				sorted(
+					self.card.description.splitlines(),
+					key=self.line_to_datetime,
+					reverse=True
+				)
+			)
 		)
 
 	def update_card(self):
 		log(f"..[*] Updating : {self.card.name}")
-		
-		all_dates = self.get_all_dates()
 
-		if all_dates:
+		if self.card.description:
 			# first, remove all labels
 			self.remove_date_labels()
 
 			# then, calculate which label to add
-			self.add_date_label(all_dates)
+			self.add_date_label()
 
 			# put the newest date on top
-			self.reorder_dates(all_dates)
+			self.reorder_dates()
