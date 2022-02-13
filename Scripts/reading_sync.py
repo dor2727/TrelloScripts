@@ -58,6 +58,26 @@ def sync_boards(source_board, dest_board, label_name):
 	if counter:
 		log(f"...[*] moved {counter} cards")
 
+def sync_lists_order(source_board, dest_board):
+	log(f"...[*] Synching lists : \"{source_board.name}\" --> \"{dest_board.name}\"")
+	source_lists = source_board.all_lists()
+	dest_lists = dest_board.all_lists()
+
+	some_high_number = max((i.pos for i in dest_lists), default=100)
+
+	for index, l_dest in enumerate(dest_lists):
+		l_source = get_item(source_lists, l_dest.name)
+
+		suffix = ''
+		if l_source is None:
+			suffix = " (no source list found)"
+			new_pos = some_high_number*10 + index
+		else:
+			new_pos = l_source.pos
+
+		if new_pos != l_dest.pos:
+			log(f"..........[*] Moving {l_dest.name} from {l_dest.pos} to {new_pos}{suffix}")
+			l_dest.move(new_pos)
 
 def sync(board_reading, board_done, board_backlog):
 	# sync reading -> done
