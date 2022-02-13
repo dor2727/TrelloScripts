@@ -61,18 +61,25 @@ def sync_boards(source_board, dest_board, label_name):
 
 def sync(board_reading, board_done, board_backlog):
 	# sync reading -> done
+def sync(board_main, board_done, board_backlog):
+	# sync main -> done
 	# 	label: "Done"
-	# sync reading -> backlog
+	# sync main -> backlog
 	# 	label: "ToBacklog"
-	# sync backlog -> reading
+	# sync backlog -> main
 	# 	label: "ToReading"
 
 	if (board_reading is not None) and (board_done is not None):
 		sync_boards(board_reading, board_done, "Done")
+	if (board_main is not None) and (board_done is not None):
+		sync_boards(board_main, board_done, "Done")
 
 	if (board_reading is not None) and (board_backlog is not None):
 		sync_boards(board_reading, board_backlog, "ToBacklog")
 		sync_boards(board_backlog, board_reading, "ToReading")
+	if (board_main is not None) and (board_backlog is not None):
+		sync_boards(board_main, board_backlog, "ToBacklog")
+		sync_boards(board_backlog, board_main, "ToReading")
 
 def get_board_triplet(board_name, boards, prefix=""):
 	# if a board doesn't exist - get_item returns None
