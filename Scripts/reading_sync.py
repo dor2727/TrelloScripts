@@ -22,7 +22,7 @@ Similarly for "Reading" and "Reading - Backlog"
 
 
 def sync_boards(source_board, dest_board, label_name):
-	log(f".[*] Synching : \"{source_board.name}\" --> \"{dest_board.name}\"")
+	log(f"..[*] Synching cards : \"{source_board.name}\" --> \"{dest_board.name}\"")
 
 	label = get_item(source_board.get_labels(), label_name)
 	dest_lists = dest_board.all_lists()
@@ -96,17 +96,18 @@ def sync(board_main, board_done, board_backlog):
 	# 	label: "ToBacklog"
 	# sync backlog -> main
 	# 	label: "ToReading"
+	log(f"[*] Synching \"{board_main.name}\"")
 
-	if (board_reading is not None) and (board_done is not None):
-		sync_boards(board_reading, board_done, "Done")
+	if (board_main is not None):
+		reset_lists_pos(board_main)
+
 	if (board_main is not None) and (board_done is not None):
 		sync_boards(board_main, board_done, "Done")
+		sync_lists_order(board_main, board_done)
 
-	if (board_reading is not None) and (board_backlog is not None):
-		sync_boards(board_reading, board_backlog, "ToBacklog")
-		sync_boards(board_backlog, board_reading, "ToReading")
 	if (board_main is not None) and (board_backlog is not None):
 		sync_boards(board_main, board_backlog, "ToBacklog")
+		sync_lists_order(board_main, board_backlog)
 		sync_boards(board_backlog, board_main, "ToReading")
 
 def get_board_triplet(board_name, boards, prefix=""):
