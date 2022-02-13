@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-from TrelloScripts.consts                import *
-from TrelloScripts.log                   import log, log_initialize, set_logfile
-from TrelloScripts.utils                 import *
+from TrelloScripts.consts import *
+from TrelloScripts.log    import log, log_initialize, set_logfile
+from TrelloScripts.utils  import *
 
 set_verbose(20)
 

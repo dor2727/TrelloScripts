@@ -4,9 +4,9 @@ import os
 import json
 import datetime
 
-from TrelloScripts.consts                import *
-from TrelloScripts.log                   import log, log_initialize, set_logfile
-from TrelloScripts.utils                 import *
+from TrelloScripts.consts import *
+from TrelloScripts.log    import log, log_initialize, set_logfile
+from TrelloScripts.utils  import *
 
 
 EXPORT_PARAMETERS = {
