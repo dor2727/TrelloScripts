@@ -109,13 +109,13 @@ def sync(board_main, board_done, board_backlog):
 		reset_lists_pos(board_main)
 
 	if (board_main is not None) and (board_done is not None):
-		sync_boards(board_main, board_done, "Done")
+		sync_boards     (board_main, board_done, "Done")
 		sync_lists_order(board_main, board_done)
 
 	if (board_main is not None) and (board_backlog is not None):
-		sync_boards(board_main, board_backlog, "ToBacklog")
-		sync_lists_order(board_main, board_backlog)
-		sync_boards(board_backlog, board_main, "ToReading")
+		sync_boards     (board_main   , board_backlog, "ToBacklog")
+		sync_lists_order(board_main   , board_backlog)
+		sync_boards     (board_backlog, board_main   , "ToReading")
 
 def get_board_triplet(board_name, boards, prefix=""):
 	# if a board doesn't exist - get_item returns None
