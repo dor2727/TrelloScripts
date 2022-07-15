@@ -88,9 +88,8 @@ def sync_lists_order(source_board, dest_board):
 
 def reset_lists_pos(board):
 	log(f"...[*] Reseting list positions : \"{board.name}\"")
-	all_lists = board.all_lists()
 
-	for index, l in enumerate(sorted(all_lists, key=lambda i: i.pos)):
+	for index, l in enumerate(sorted(board.all_lists(), key=lambda i: i.pos)):
 		new_pos = (index+1) * 1000
 		if new_pos != l.pos:
 			log(f".........[*] Moving {l.name} from {l.pos} to {new_pos}")
