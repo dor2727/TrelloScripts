@@ -40,16 +40,14 @@ def export_board(client, folder_name, board):
 	# getting the organization
 	if json_data["idOrganization"]:
 		organization = client.get_organization( json_data["idOrganization"] )
-
-		board_folder = os.path.join(
-			folder_name,
-			organization.name,
-		)
+		organization_name = organization.name
 	else:
-		board_folder = os.path.join(
-			folder_name,
-			"Personal Boards",
-		)
+		organization_name = "Personal Boards"
+
+	board_folder = os.path.join(
+		folder_name,
+		organization_name,
+	)
 
 	if not os.path.isdir(board_folder):
 		os.mkdir(board_folder)
@@ -89,6 +87,7 @@ def main():
 	set_logfile("export.log")
 	log_initialize()
 
+	client = get_client()
 	all_boards = get_all_boards()
 
 	folder_name = initialize_export_folder()
