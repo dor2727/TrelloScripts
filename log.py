@@ -1,4 +1,5 @@
 import os
+import re
 import datetime
 from TrelloScripts.consts import *
 
@@ -30,12 +31,13 @@ def set_logfile(file_name=None, absolute_path=None):
 	raise ValueError("No file name specified")
 
 
+_GET_INITIAL_DOTS = re.compile("^\\.*")
 def log(s):
-	if s.count('.') <= VERBOSE:
+	num_dots = len(_GET_INITIAL_DOTS.match(s).group())
+	if num_dots <= VERBOSE:
 		print(s)
-		f = open(LOGFILE, 'a')
-		f.write('\n' + s)
-		f.close()
+		with open(LOGFILE, 'a') as f:
+			f.write('\n' + s)
 
 def log_initialize():
 	log("-------------")
