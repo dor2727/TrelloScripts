@@ -22,12 +22,14 @@ def main():
 
 	log("[*] Fixing Description/Title to Attachment : Iterating cards")
 	for board in boards:
+		log(f"..[*] Iterating {board.name}")
 		for card in board.all_cards():
 			c = AttachmentCardUpdater(card)
 			c.update_card()
 
 	log("[*] Fixing Title : Iterating cards")
 	for board in boards:
+		log(f"..[*] Iterating {board.name}")
 		for card in board.all_cards():
 			c = TitleCardUpdater(card)
 			c.update_card()
