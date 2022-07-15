@@ -57,11 +57,7 @@ def get_item(all_list, item_name):
 def is_labeled(card, label_name=None):
 	# if label_name is a string, check if the card has that label
 	if label_name:
-		if card.labels:
-			for l in card.labels:
-				if l.name == label_name:
-					return True
-		return False
+		return any(l.name == label_name for l in card.labels)
 	# Otherwise, simply check if there are any labels
 	else:
 		return bool(card.labels)
