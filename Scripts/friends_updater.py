@@ -11,21 +11,16 @@ set_verbose(4)
 
 def main():
 	set_logfile("friends_updater.log")
-
 	log_initialize()
 
-	client = get_client()
-
-
-	log("[*] Getting friends board")
-	all_boards = client.list_boards()
+	all_boards = get_all_boards()
 	friends_board = get_item(all_boards, "Friends")
-
 
 	log("[*] Iterating cards")
 	for card in friends_board.all_cards():
 		c = CardUpdater(card, friends_board)
 		c.update_card()
+
 	log("[*] Done")
 
 

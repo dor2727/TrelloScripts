@@ -11,14 +11,9 @@ set_verbose(10)
 
 def main():
 	set_logfile("card_fix.log")
-
 	log_initialize()
 
-	client = get_client()
-
-
-	log("[*] Getting reading boards")
-	all_boards = client.list_boards()
+	all_boards = get_all_boards()
 	boards = [b for b in all_boards if "Reading"    in b.name] \
 		   + [b for b in all_boards if "Blog"       in b.name] \
 		   + [b for b in all_boards if "Collection" in b.name] \

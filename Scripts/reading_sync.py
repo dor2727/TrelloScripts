@@ -127,24 +127,18 @@ def get_board_triplet(board_name, boards, prefix=""):
 
 def main():
 	set_logfile("reading_sync.log")
-
 	log_initialize()
 
-	client = get_client()
+	all_boards = get_all_boards()
 
-	# get all the boards
 	log("[*] Getting reading boards")
-	all_boards = client.list_boards()
-
 	# take only the reading boards
 	reading_boards = [b for b in all_boards if "Reading" in b.name]
-
 	# extract the names of the boards
 	reading_board_names = list(set([
 		b.name.split(" - ")[1]
 		for b in reading_boards
 	]))
-
 	# iterate each name, and sync it.
 	for name in reading_board_names:
 		sync(*get_board_triplet(name, reading_boards, prefix="Reading - "))

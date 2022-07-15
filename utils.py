@@ -37,6 +37,11 @@ def get_client():
 
 	return CLIENT
 
+def get_all_boards():
+	client = get_client()
+	log("[*] Getting boards")
+	all_boards = client.list_boards()
+	return all_boards
 
 #
 # Card utils

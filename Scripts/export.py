@@ -87,24 +87,19 @@ def compress_export(folder_name):
 
 def main():
 	set_logfile("export.log")
-
 	log_initialize()
 
-	client = get_client()
+	all_boards = get_all_boards()
 
 	folder_name = initialize_export_folder()
-
-
-	log("[*] Getting boards")
-	all_boards = client.list_boards()
-
 
 	log("[*] Exporting boards")
 	for board in all_boards:
 		export_board(client, folder_name, board)
 
-
 	compress_export(folder_name)
+
+	log("[*] Done")
 
 if __name__ == '__main__':
 	main()
