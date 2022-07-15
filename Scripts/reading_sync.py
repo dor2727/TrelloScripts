@@ -134,10 +134,10 @@ def main():
 	# take only the reading boards
 	reading_boards = [b for b in all_boards if "Reading" in b.name]
 	# extract the names of the boards
-	reading_board_names = list(set([
-		b.name.split(" - ")[1]
-		for b in reading_boards
-	]))
+	reading_board_names = set(map(
+		lambda b: b.name.split(" - ")[1],
+		reading_boards
+	))
 	# iterate each name, and sync it.
 	for name in reading_board_names:
 		sync(*get_board_triplet(name, reading_boards, prefix="Reading - "))
