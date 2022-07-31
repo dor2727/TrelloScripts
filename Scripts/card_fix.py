@@ -4,6 +4,7 @@ from TrelloScripts.consts                import *
 from TrelloScripts.log                   import log, log_initialize, set_logfile
 from TrelloScripts.utils                 import *
 from TrelloScripts.Classes.TitleFix      import CardUpdater as TitleCardUpdater
+from TrelloScripts.Classes.TitleStrip    import CardUpdater as TitleStripCardUpdater
 from TrelloScripts.Classes.AttachmentFix import CardUpdater as AttachmentCardUpdater
 
 set_verbose(10)
@@ -32,6 +33,14 @@ def main():
 		log(f"..[*] Iterating {board.name}")
 		for card in board.all_cards():
 			c = TitleCardUpdater(card)
+			c.update_card()
+
+	log("[*] Fixing Title Strip : Iterating cards")
+	for board in boards:
+		log(f"..[*] Iterating {board.name}")
+		all_labels = board.get_labels()
+		for card in board.all_cards():
+			c = TitleStripCardUpdater(card, all_labels)
 			c.update_card()
 
 	log("[*] Done")

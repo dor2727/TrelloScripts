@@ -4,7 +4,7 @@ from TrelloScripts.utils import get_item, read_link
 
 class CardUpdater(object):
 	def __init__(self, card):
-		self.card  = card
+		self.card = card
 
 	def get_name(self):
 		if len(self.card.attachments) == 0:
