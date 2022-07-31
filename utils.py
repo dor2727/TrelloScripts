@@ -47,11 +47,17 @@ def get_all_boards():
 # Card utils
 #
 
-def get_item(all_list, item_name):
+def get_item(all_list, item_name, case_sensitive=True):
+	if case_sensitive:
+		filter_function = lambda obj: obj.name == item_name
+	else:
+		item_name_lower = item_name.lower()
+		filter_function = lambda obj: obj.name.lower() == item_name_lower
+
 	try:
 		return next(
 			filter(
-				lambda i: i.name == item_name,
+				filter_function,
 				all_list
 			)
 		)
