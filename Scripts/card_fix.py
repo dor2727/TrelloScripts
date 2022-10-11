@@ -6,6 +6,7 @@ from TrelloScripts.utils                 import *
 from TrelloScripts.Classes.TitleFix      import CardUpdater as TitleCardUpdater
 from TrelloScripts.Classes.TitleStrip    import CardUpdater as TitleStripCardUpdater
 from TrelloScripts.Classes.AttachmentFix import CardUpdater as AttachmentCardUpdater
+from TrelloScripts.Classes.CoverSet      import CardUpdater as CoverSetCardUpdater
 
 set_verbose(10)
 
@@ -41,6 +42,13 @@ def main():
 		all_labels = board.get_labels()
 		for card in board.all_cards():
 			c = TitleStripCardUpdater(card, all_labels)
+			c.update_card()
+
+	log("[*] Adding covers : Iterating cards")
+	for board in boards:
+		log(f"..[*] Iterating {board.name}")
+		for card in board.all_cards():
+			c = CoverSetCardUpdater(card)
 			c.update_card()
 
 	log("[*] Done")
