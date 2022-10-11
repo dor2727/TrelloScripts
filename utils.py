@@ -72,3 +72,13 @@ def is_labeled(card, label_name=None):
 	# Otherwise, simply check if there are any labels
 	else:
 		return bool(card.labels)
+
+def get_first_attachment(card):
+	for attachment in self.card.attachments:
+		# youtube cover
+		if attachment["name"] == "0.jpg":
+			continue
+
+		return attachment
+
+	return None

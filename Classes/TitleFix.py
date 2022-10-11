@@ -1,5 +1,5 @@
 from TrelloScripts.log import log
-from TrelloScripts.utils import get_item, read_link
+from TrelloScripts.utils import get_item, read_link, get_first_attachment
 
 
 class CardUpdater(object):
@@ -15,7 +15,7 @@ class CardUpdater(object):
 			log(f".....[w] More than 1 attachment! Using the first one.")
 
 
-		attachment = self.card.attachments[0]
+		attachment = get_first_attachment(self.card)
 		if "url" in attachment:
 			return read_link(attachment["url"])
 
