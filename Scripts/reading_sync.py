@@ -148,6 +148,9 @@ def main():
 	log("[*] Getting Cooking boards")
 	sync(*get_board_triplet("Cooking", all_boards))
 
+	log("[*] Getting Shopping boards")
+	sync(*get_board_triplet("Shopping", all_boards))
+
 	log("[*] Done")
 
 
