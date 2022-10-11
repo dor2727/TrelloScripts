@@ -1,3 +1,4 @@
+import re
 import urllib
 import requests
 from urllib.parse import urlparse, unquote
@@ -82,3 +83,54 @@ def read_link_other(bs):
 	title = bs.find('title').text
 	log(f".....[*] Setting title: {title}")
 	return title
+
+
+def get_cover_url(url):
+	domain = get_domain(url)
+
+	if domain == "www.reddit.com":
+		return get_cover_url_reddit(url)
+	elif domain in ("www.youtube.com", "m.youtube.com"):
+		return get_cover_url_youtube_full(url)
+	elif domain == "youtu.be":
+		return get_cover_url_youtube_short(url)
+
+@url_to_bs
+def get_cover_url_reddit(bs):
+	try:
+		div_1 = bs.find(attrs={"data-test-id": "post-content"})
+		div_1_children = list(div_1.children)
+
+		div_2 = div_1_children[3]
+
+		div_3 = next(div_2.children)
+
+		a = next(div_3.children)
+		assert a.name == "a"
+
+		return a.attrs["href"]
+	except:
+		return
+
+
+YOUTUBE_THUMBNAIL_TEMPLATE = "http://img.youtube.com/vi/%s/0.jpg"
+def get_cover_url_from_youtube_video_id(video_id):
+	return YOUTUBE_THUMBNAIL_TEMPLATE % video_id
+
+YOUTUBE_PATTERN_FULL = re.compile("(?<=v=).{11}")
+def get_cover_url_youtube_full(url):
+	try:
+		video_id = YOUTUBE_PATTERN_FULL.findall(url)[0]
+		return get_cover_url_from_youtube_video_id(video_id)
+	except:
+		return
+
+YOUTUBE_PATTERN_SHORT = re.compile("(?<=v=).{11}")
+def get_cover_url_youtube_short(url):
+	try:
+		assert url.startswith("https://youtu.be/")
+		assert len(url) == 28
+		video_id = url[17:]
+		return get_cover_url_from_youtube_video_id(video_id)
+	except:
+		return
