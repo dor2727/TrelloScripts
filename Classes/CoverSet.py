@@ -24,6 +24,5 @@ class CardUpdater(object):
 		return any(att["previews"] for att in self.card.attachments)
 
 	def update_card(self):
-		import ipdb; ipdb.set_trace()
 		if not self.is_cover_set():
 			self.set_card_cover()

@@ -20,7 +20,7 @@ def main():
 		   + [b for b in all_boards if "Blog"       in b.name] \
 		   + [b for b in all_boards if "Collection" in b.name] \
 		   + [b for b in all_boards if "Cooking"    in b.name]
-
+	boards_cover = [get_item(all_boards, "Cooking")]
 
 	log("[*] Fixing Description/Title to Attachment : Iterating cards")
 	for board in boards:
@@ -45,7 +45,7 @@ def main():
 			c.update_card()
 
 	log("[*] Adding covers : Iterating cards")
-	for board in boards:
+	for board in boards_cover:
 		log(f"..[*] Iterating {board.name}")
 		for card in board.all_cards():
 			c = CoverSetCardUpdater(card)

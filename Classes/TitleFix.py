@@ -31,6 +31,6 @@ class CardUpdater(object):
 
 	def update_card(self):
 		if self.card.name == "null":
-			log(f"..[*] Fixing title : {self.card.name}")
+			log(f"...[*] Fixing title : {self.card.name}")
 
 			self.set_card_name()
