@@ -114,10 +114,13 @@ class CardUpdater(object):
 	def reorder_dates(self):
 		self.card.set_description(
 			'\n'.join(
-				sorted(
-					self.card.description.splitlines(),
-					key=self.line_to_datetime,
-					reverse=True
+				map(
+					str.strip,
+					sorted(
+						self.card.description.splitlines(),
+						key=self.line_to_datetime,
+						reverse=True
+					)
 				)
 			)
 		)
