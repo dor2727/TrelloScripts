@@ -5,7 +5,7 @@ import json
 import datetime
 
 from TrelloScripts.consts import *
-from TrelloScripts.log    import log, log_initialize, set_logfile
+from TrelloScripts.log    import log, initialize_logfile
 from TrelloScripts.utils  import *
 
 
@@ -83,10 +83,8 @@ def compress_export(folder_name):
 	return os.system(f"tar -I 'gzip -9' --remove-files -cf {folder_name}.tar.gz {folder_name}")
 
 
+@initialize_logfile("export.log")
 def main():
-	set_logfile("export.log")
-	log_initialize()
-
 	client = get_client()
 	all_boards = get_all_boards()
 

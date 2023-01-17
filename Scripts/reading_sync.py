@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from TrelloScripts.consts import *
-from TrelloScripts.log    import log, log_initialize, set_logfile
+from TrelloScripts.log    import log, initialize_logfile
 from TrelloScripts.utils  import *
 
 set_verbose(20)
@@ -138,10 +138,8 @@ def get_board_triplet(board_name, boards, prefix=""):
 
 	return board_reading, board_done, board_backlog, board_inspiration, board_wont_do
 
+@initialize_logfile("reading_sync.log")
 def main():
-	set_logfile("reading_sync.log")
-	log_initialize()
-
 	all_boards = get_all_boards()
 
 	log("[*] Getting reading boards")

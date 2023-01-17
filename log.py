@@ -42,3 +42,13 @@ def log(s):
 def log_initialize():
 	log("-------------")
 	log(datetime.datetime.now().strftime("%Y/%m/%d %H:%M"))
+
+def initialize_logfile(*log_args, **log_kwargs):
+	def dec(func):
+		def inner(*args, **kwargs):
+			set_logfile(*log_args, **log_kwargs)
+			log_initialize()
+
+			return func(*args, **kwargs)
+		return inner
+	return dec
