@@ -17,6 +17,7 @@ def main():
 
 	all_boards = get_all_boards()
 	boards = [b for b in all_boards if "Reading"    in b.name] \
+		   + [b for b in all_boards if "Games"      in b.name] \
 		   + [b for b in all_boards if "Blog"       in b.name] \
 		   + [b for b in all_boards if "Collection" in b.name] \
 		   + [b for b in all_boards if "Cooking"    in b.name]
