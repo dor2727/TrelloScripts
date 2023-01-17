@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from TrelloScripts.consts                import *
-from TrelloScripts.log                   import log, log_initialize, set_logfile
+from TrelloScripts.log                   import log, initialize_logfile
 from TrelloScripts.utils                 import *
 from TrelloScripts.Classes.TitleFix      import CardUpdater as TitleCardUpdater
 from TrelloScripts.Classes.TitleStrip    import CardUpdater as TitleStripCardUpdater
@@ -11,10 +11,22 @@ from TrelloScripts.Classes.CoverSet      import CardUpdater as CoverSetCardUpdat
 set_verbose(10)
 
 
-def main():
-	set_logfile("card_fix.log")
-	log_initialize()
+def iterate_boards(cls, boards, requires_all_labels = False):
+	for board in boards:
+		log(f"..[*] Iterating {board.name}")
 
+		if requires_all_labels:
+			all_labels = board.get_labels()
+			args = (all_labels,)
+		else:
+			args = ()
+
+		for card in board.all_cards():
+			c = cls(card, *args)
+			c.update_card()
+
+@initialize_logfile("card_fix.log")
+def main():
 	all_boards = get_all_boards()
 	boards = [b for b in all_boards if "Reading"    in b.name] \
 		   + [b for b in all_boards if "Games"      in b.name] \
@@ -24,33 +36,16 @@ def main():
 	boards_cover = [get_item(all_boards, "Cooking")]
 
 	log("[*] Fixing Description/Title to Attachment : Iterating cards")
-	for board in boards:
-		log(f"..[*] Iterating {board.name}")
-		for card in board.all_cards():
-			c = AttachmentCardUpdater(card)
-			c.update_card()
+	iterate_boards(AttachmentCardUpdater, boards)
 
 	log("[*] Fixing Title : Iterating cards")
-	for board in boards:
-		log(f"..[*] Iterating {board.name}")
-		for card in board.all_cards():
-			c = TitleCardUpdater(card)
-			c.update_card()
+	iterate_boards(TitleCardUpdater, boards)
 
 	log("[*] Fixing Title Strip : Iterating cards")
-	for board in boards:
-		log(f"..[*] Iterating {board.name}")
-		all_labels = board.get_labels()
-		for card in board.all_cards():
-			c = TitleStripCardUpdater(card, all_labels)
-			c.update_card()
+	iterate_boards(TitleStripCardUpdater, boards, True)
 
 	log("[*] Adding covers : Iterating cards")
-	for board in boards_cover:
-		log(f"..[*] Iterating {board.name}")
-		for card in board.all_cards():
-			c = CoverSetCardUpdater(card)
-			c.update_card()
+	iterate_boards(CoverSetCardUpdater, boards_cover)
 
 	log("[*] Done")
 
