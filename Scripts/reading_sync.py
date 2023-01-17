@@ -138,11 +138,9 @@ def get_board_triplet(board_name, boards, prefix=""):
 
 	return board_reading, board_done, board_backlog, board_inspiration, board_wont_do
 
-@initialize_logfile("reading_sync.log")
-def main():
-	all_boards = get_all_boards()
-
+def sync_reading_boards(all_boards):
 	log("[*] Getting reading boards")
+
 	# take only the reading boards
 	reading_boards = [b for b in all_boards if "Reading" in b.name]
 	# extract the names of the boards
@@ -154,14 +152,20 @@ def main():
 	for name in reading_board_names:
 		sync(*get_board_triplet(name, reading_boards, prefix="Reading - "))
 
-	log("[*] Getting Programming boards")
-	sync(*get_board_triplet("Programming Projects", all_boards))
+@initialize_logfile("reading_sync.log")
+def main():
+	all_boards = get_all_boards()
 
-	log("[*] Getting Cooking boards")
-	sync(*get_board_triplet("Cooking", all_boards))
+	sync_reading_boards(all_boards)
 
-	log("[*] Getting Shopping boards")
-	sync(*get_board_triplet("Shopping", all_boards))
+	for board_name in [
+		"Games",
+		"Programming Projects",
+		"Cooking",
+		"Shopping",
+	]:
+		log(f"[*] Getting \"{board_name}\" boards")
+		sync(*get_board_triplet(board_name, all_boards))
 
 	log("[*] Done")
 
