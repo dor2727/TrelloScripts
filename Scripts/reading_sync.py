@@ -126,7 +126,7 @@ def sync(board_main, board_done, board_backlog, board_inspiration=None, board_wo
 		sync_boards     (board_main   , board_wont_do, "Wont do")
 		sync_lists_order(board_main   , board_wont_do)
 	if (board_backlog is not None) and (board_wont_do is not None):
-		sync_boards     (board_backlog, board_wont_do, "TookInspiration")
+		sync_boards     (board_backlog, board_wont_do, "Wont do")
 
 def get_board_triplet(board_name, boards, prefix=""):
 	# if a board doesn't exist - get_item returns None
