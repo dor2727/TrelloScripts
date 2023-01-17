@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import sys
 
 from TrelloScripts.consts import *
 from TrelloScripts.log    import log, initialize_logfile
@@ -152,10 +153,7 @@ def sync_reading_boards(all_boards):
 	for name in reading_board_names:
 		sync(*get_board_triplet(name, reading_boards, prefix="Reading - "))
 
-@initialize_logfile("reading_sync.log")
-def main():
-	all_boards = get_all_boards()
-
+def sync_all_boards(all_boards):
 	sync_reading_boards(all_boards)
 
 	for board_name in [
@@ -166,6 +164,19 @@ def main():
 	]:
 		log(f"[*] Getting \"{board_name}\" boards")
 		sync(*get_board_triplet(board_name, all_boards))
+
+
+@initialize_logfile("reading_sync.log")
+def main():
+	all_boards = get_all_boards()
+
+	if len(sys.argv) == 1:
+		sync_all_boards()
+	else:
+		board_name = sys.argv[1]
+		log(f"[*] Getting \"{board_name}\" boards")
+		sync(*get_board_triplet(board_name, all_boards))
+
 
 	log("[*] Done")
 
