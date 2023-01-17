@@ -95,7 +95,7 @@ def reset_lists_pos(board):
 			log(f".........[*] Moving {l.name} from {l.pos} to {new_pos}")
 			l.move(new_pos)
 
-def sync(board_main, board_done, board_backlog, board_inspiration=None):
+def sync(board_main, board_done, board_backlog, board_inspiration=None, board_wont_do=None):
 	# sync main -> done
 	# 	label: "Done"
 	# sync main -> backlog
@@ -118,9 +118,13 @@ def sync(board_main, board_done, board_backlog, board_inspiration=None):
 
 	if (board_main is not None) and (board_inspiration is not None):
 		sync_boards     (board_main   , board_inspiration, "TookInspiration")
-		sync_lists_order(board_main   , board_inspiration)
 	if (board_backlog is not None) and (board_inspiration is not None):
 		sync_boards     (board_backlog, board_inspiration, "TookInspiration")
+		sync_lists_order(board_main   , board_inspiration)
+
+	if (board_main is not None) and (board_wont_do is not None):
+		sync_boards     (board_main   , board_wont_do, "Wont do")
+		sync_lists_order(board_main   , board_wont_do)
 
 def get_board_triplet(board_name, boards, prefix=""):
 	# if a board doesn't exist - get_item returns None
@@ -128,8 +132,9 @@ def get_board_triplet(board_name, boards, prefix=""):
 	board_done        = get_item(boards, f"{prefix}{board_name} - Done")
 	board_backlog     = get_item(boards, f"{prefix}{board_name} - Backlog")
 	board_inspiration = get_item(boards, f"{prefix}{board_name} - TookInspiration")
+	board_wont_do     = get_item(boards, f"{prefix}{board_name} - Wont do")
 
-	return board_reading, board_done, board_backlog, board_inspiration
+	return board_reading, board_done, board_backlog, board_inspiration, board_wont_do
 
 def main():
 	set_logfile("reading_sync.log")
