@@ -25,3 +25,4 @@ ORGANIZATIONS = {
 	"ZZZ_2022.09.19_Personal"         : "personal67443136"       ,
 	"ZZZ_2022.09.19_Projects"         : "projects04437456"       ,
 }
+ORGANIZATIONS_REVERSE = { v: k for k,v in ORGANIZATIONS.items() }

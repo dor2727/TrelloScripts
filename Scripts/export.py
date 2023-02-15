@@ -8,6 +8,7 @@ from TrelloScripts.utils.consts import *
 from TrelloScripts.utils.log    import log, initialize_logfile
 from TrelloScripts.utils.utils  import *
 
+UNKNOWN_ORGANIZATION_FOLDER = "Other_Organization"
 
 EXPORT_PARAMETERS = {
 	"fields"           : "all",
@@ -40,9 +41,9 @@ def export_board(client, folder_name, board):
 	# getting the organization
 	if json_data["idOrganization"]:
 		organization = client.get_organization( json_data["idOrganization"] )
-		organization_name = organization.name
+		organization_name = ORGANIZATIONS_REVERSE.get(organization.name, UNKNOWN_ORGANIZATION_FOLDER)
 	else:
-		organization_name = "Personal Boards"
+		organization_name = UNKNOWN_ORGANIZATION_FOLDER
 
 	board_folder = os.path.join(
 		folder_name,
