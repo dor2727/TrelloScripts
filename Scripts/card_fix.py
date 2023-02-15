@@ -33,7 +33,7 @@ def main():
 		   + [b for b in all_boards if "Blog"       in b.name] \
 		   + [b for b in all_boards if "Collection" in b.name] \
 		   + [b for b in all_boards if "Cooking"    in b.name]
-	boards_cover = [get_item(all_boards, "Cooking")]
+	boards_cover = [b for b in all_boards if "Cooking"    in b.name]
 
 	log("[*] Fixing Description/Title to Attachment : Iterating cards")
 	iterate_boards(AttachmentCardUpdater, boards)
