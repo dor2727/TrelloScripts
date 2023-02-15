@@ -126,7 +126,6 @@ def get_cover_url_youtube_full(url):
 	except:
 		return
 
-YOUTUBE_PATTERN_SHORT = re.compile("(?<=v=).{11}")
 def get_cover_url_youtube_short(url):
 	try:
 		assert url.startswith("https://youtu.be/")
