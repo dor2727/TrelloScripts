@@ -11,16 +11,29 @@ from TrelloScripts.utils_web import read_link, is_url
 # File utils
 #
 
-def read(filename):
+def try_read(file_path):
 	try:
-		return open(filename).read().strip()
+		return open(file_path).read().strip()
 	except:
-		filename = os.path.join(
-			os.path.dirname(__file__),
-			filename
-		)
-		return open(filename).read().strip()
+		return None
 
+def read(filename):
+	if (result := try_read(filename)) is not None:
+		return result
+
+	path_in_directory = os.path.join(
+		os.path.dirname(__file__),
+		filename
+	)
+	if (result := try_read(path_in_directory)) is not None:
+		return result
+
+	path_in_secrets = os.path.join(
+		MAIN_FOLDER,
+		"secrets",
+		filename
+	)
+	return try_read(path_in_secrets)
 #
 # Client utils
 #

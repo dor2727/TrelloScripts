@@ -4,6 +4,7 @@ __pycache__/*
 Logs
 Exports
 
+secrets
 key
 secret
 token
