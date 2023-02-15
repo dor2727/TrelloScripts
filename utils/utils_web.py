@@ -14,11 +14,12 @@ headers = {
 #
 # An exported utility function
 #
+_allowed_schemes = ["https", "http"]
 def is_url(url):
 	if '\n' in url:
 		return False
 	scheme = urllib.parse.urlparse(url).scheme
-	return scheme in ["https", "http"]
+	return scheme in _allowed_schemes
 
 
 
