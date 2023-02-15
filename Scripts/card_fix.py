@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
-from TrelloScripts.consts                import *
-from TrelloScripts.log                   import log, initialize_logfile
-from TrelloScripts.utils                 import *
-from TrelloScripts.Classes.TitleFix      import CardUpdater as TitleCardUpdater
-from TrelloScripts.Classes.TitleStrip    import CardUpdater as TitleStripCardUpdater
-from TrelloScripts.Classes.AttachmentFix import CardUpdater as AttachmentCardUpdater
-from TrelloScripts.Classes.CoverSet      import CardUpdater as CoverSetCardUpdater
+from TrelloScripts.utils.consts          import *
+from TrelloScripts.utils.log             import log, initialize_logfile
+from TrelloScripts.utils.utils           import *
+from TrelloScripts.Classes import	TitleCardUpdater     , \
+									TitleStripCardUpdater, \
+									AttachmentCardUpdater, \
+									CoverSetCardUpdater
 
 set_verbose(10)
 

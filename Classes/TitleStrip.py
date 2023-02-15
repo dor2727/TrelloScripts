@@ -1,5 +1,5 @@
-from TrelloScripts.log import log
-from TrelloScripts.utils import get_item, read_link
+from ..utils.log import log
+from ..utils.utils import get_item, read_link
 
 _YOUTUBE = " - YouTube"
 _TASTE_OF_HOME = " Recipe: How to Make It"

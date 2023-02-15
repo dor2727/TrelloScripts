@@ -2,9 +2,9 @@
 from trello import TrelloClient
 import os
 
-from TrelloScripts.consts import *
-from TrelloScripts.log import log, set_verbose
-from TrelloScripts.utils_web import read_link, is_url
+from .consts import *
+from .log import log, set_verbose
+from .utils_web import read_link, is_url
 
 
 #

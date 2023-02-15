@@ -1,6 +1,6 @@
 import os
 
-MAIN_FOLDER = os.path.dirname(__file__)
+MAIN_FOLDER = os.path.dirname(os.path.dirname(__file__))
 
 # key is common-name, value is trello-name
 ORGANIZATIONS = {

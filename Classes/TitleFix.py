@@ -1,5 +1,5 @@
-from TrelloScripts.log import log
-from TrelloScripts.utils import get_item, read_link, get_first_attachment
+from ..utils.log import log
+from ..utils.utils import get_item, read_link, get_first_attachment
 
 
 class CardUpdater(object):

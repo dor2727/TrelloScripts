@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-from TrelloScripts.consts                import *
-from TrelloScripts.log                   import log, initialize_logfile
-from TrelloScripts.utils                 import *
-from TrelloScripts.Classes.FriendUpdater import CardUpdater
+from TrelloScripts.utils.consts import *
+from TrelloScripts.utils.log    import log, initialize_logfile
+from TrelloScripts.utils.utils  import *
+from TrelloScripts.Classes		import FriendCardUpdater
 
 set_verbose(4)
 
@@ -17,7 +17,7 @@ def main():
 
 	log("[*] Iterating cards")
 	for card in friends_board.all_cards():
-		c = CardUpdater(card, friends_board)
+		c = FriendCardUpdater(card, friends_board)
 		c.update_card()
 
 	log("[*] Done")

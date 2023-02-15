@@ -1,7 +1,8 @@
 import os
 import re
 import datetime
-from TrelloScripts.consts import *
+
+from .consts import *
 
 
 VERBOSE = 1000

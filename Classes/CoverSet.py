@@ -1,6 +1,6 @@
-from TrelloScripts.log import log
-from TrelloScripts.utils import get_item, read_link
-from TrelloScripts.utils_web import get_cover_url
+from ..utils.log import log
+from ..utils.utils import get_item, read_link
+from ..utils.utils_web import get_cover_url
 
 class CardUpdater(object):
 	def __init__(self, card):

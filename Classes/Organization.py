@@ -1,7 +1,7 @@
 
 # this is only a plan
 
-from TrelloScripts.consts import ORGANIZATIONS
+from ..utils.consts import ORGANIZATIONS
 
 
 class Organization(object):

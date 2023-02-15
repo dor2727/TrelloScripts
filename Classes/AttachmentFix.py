@@ -1,5 +1,5 @@
-from TrelloScripts.log import log
-from TrelloScripts.utils import get_item, is_url
+from ..utils.log import log
+from ..utils.utils import get_item, is_url
 
 
 class CardUpdater(object):

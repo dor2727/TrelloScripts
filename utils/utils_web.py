@@ -4,7 +4,7 @@ import requests
 from urllib.parse import urlparse, unquote
 from bs4 import BeautifulSoup
 
-from TrelloScripts.log import log
+from .log import log
 
 headers = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:90.0) Gecko/20100101 Firefox/90.0",
