@@ -11,7 +11,7 @@ def set_verbose(verbose):
 	VERBOSE = verbose
 
 
-LOGFILE = os.path.join(MAIN_FOLDER, "Logs/tests.log")
+LOGFILE = os.path.join(MAIN_FOLDER, "Logs", "tests.log")
 def set_logfile(file_name=None, absolute_path=None):
 	global LOGFILE
 
