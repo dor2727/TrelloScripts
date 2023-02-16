@@ -27,10 +27,10 @@ class CardUpdater(object):
 		if new_name:
 			self.card.set_name(new_name)
 		else:
-			log(f"....[*] Unable to find new title. aborting. card : {self.card.name}")
+			log(f".....[*] Unable to find new title. aborting. card : {self.card.name}")
 
 	def update_card(self):
 		if self.card.name == "null":
-			log(f"...[*] Fixing title : {self.card.name}")
+			log(f"....[*] Fixing title : {self.card.name}")
 
 			self.set_card_name()

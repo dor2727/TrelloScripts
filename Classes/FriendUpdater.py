@@ -37,7 +37,7 @@ class CardUpdater(object):
 
 	def _set_labels(self):
 		# get the labels
-		log("......[*] Getting labels")
+		log("........[*] Getting labels")
 		self._all_labels = self.board.get_labels()
 
 		# the labels are
@@ -75,7 +75,7 @@ class CardUpdater(object):
 		)
 
 	def remove_date_labels(self):
-		log("......[*] Removing date labels")
+		log("........[*] Removing date labels")
 		for label in self.date_labels:
 			self.card.remove_label(label)
 
@@ -87,28 +87,28 @@ class CardUpdater(object):
 
 		delta = (self.now - date).days
 
-		log(f"......[*] Last met {delta:3d} days ago")
+		log(f"........[*] Last met {delta:3d} days ago")
 
 		if delta <= 7:
-			log(f"....[*] Adding label : {LABEL_WEEK}")
+			log(f"......[*] Adding label : {LABEL_WEEK}")
 			self.card.add_label(self.label_week)
 		elif delta <= 14:
-			log(f"....[*] Adding label : {LABEL_2_WEEKS}")
+			log(f"......[*] Adding label : {LABEL_2_WEEKS}")
 			self.card.add_label(self.label_2_weeks)
 		elif delta <= 30:
-			log(f"....[*] Adding label : {LABEL_MONTH}")
+			log(f"......[*] Adding label : {LABEL_MONTH}")
 			self.card.add_label(self.label_month)
 		elif delta <= 30*2:
-			log(f"....[*] Adding label : {LABEL_2_MONTHS}")
+			log(f"......[*] Adding label : {LABEL_2_MONTHS}")
 			self.card.add_label(self.label_2_months)
 		elif delta <= 30*6:
-			log(f"....[*] Adding label : {LABEL_6_MONTHS}")
+			log(f"......[*] Adding label : {LABEL_6_MONTHS}")
 			self.card.add_label(self.label_6_months)
 		elif delta <= 365:
-			log(f"....[*] Adding label : {LABEL_YEAR}")
+			log(f"......[*] Adding label : {LABEL_YEAR}")
 			self.card.add_label(self.label_year)
 		else:
-			log(f"....[*] Adding label : {LABEL_TOO_MUCH}")
+			log(f"......[*] Adding label : {LABEL_TOO_MUCH}")
 			self.card.add_label(self.label_too_much)
 
 	def reorder_dates(self):
@@ -126,7 +126,7 @@ class CardUpdater(object):
 		)
 
 	def update_card(self):
-		log(f"..[*] Updating : {self.card.name}")
+		log(f"....[*] Updating : {self.card.name}")
 
 		if self.card.description:
 			# first, remove all labels

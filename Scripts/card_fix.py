@@ -8,7 +8,7 @@ from TrelloScripts.Classes import	TitleCardUpdater     , \
 									AttachmentCardUpdater, \
 									CoverSetCardUpdater
 
-set_verbose(10)
+set_verbose(8)
 
 
 def iterate_boards(cls, boards, requires_all_labels = False):

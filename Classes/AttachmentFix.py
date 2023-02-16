@@ -7,17 +7,17 @@ class CardUpdater(object):
 		self.card  = card
 
 	def _fix_card_description(self):
-		log(f"..[*] found card in board \"{self.card.board.name}\" : in list \"{self.card.get_list().name}\" : \"{self.card.name}\"")
+		log(f"....[*] found card in board \"{self.card.board.name}\" : in list \"{self.card.get_list().name}\" : \"{self.card.name}\"")
 
-		log(f"....[*] setting attachment to card: {self.card.description}")
+		log(f"......[*] setting attachment to card: {self.card.description}")
 		self.card.attach(url=self.card.description)
 		self.card.set_description('')
 
 
 	def _fix_card_name(self):
-		log(f"..[*] found card in board \"{self.card.board.name}\" : in list \"{self.card.get_list().name}\" : \"{self.card.name}\"")
+		log(f"....[*] found card in board \"{self.card.board.name}\" : in list \"{self.card.get_list().name}\" : \"{self.card.name}\"")
 
-		log(f"....[*] setting attachment to card: {self.card.name}")
+		log(f"......[*] setting attachment to card: {self.card.name}")
 		self.card.attach(url=self.card.name)
 		self.card.set_name("null")
 
