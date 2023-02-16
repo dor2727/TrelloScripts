@@ -171,7 +171,7 @@ def main():
 	all_boards = get_all_boards()
 
 	if len(sys.argv) == 1:
-		sync_all_boards()
+		sync_all_boards(all_boards)
 	else:
 		board_name = sys.argv[1]
 		log(f"[*] Getting \"{board_name}\" boards")
