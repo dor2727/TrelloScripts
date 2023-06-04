@@ -50,6 +50,10 @@ def sync_boards(source_board, dest_board, label_name):
 				# update the variable
 				dest_lists = dest_board.all_lists()
 
+			if destination_list.closed:
+				log(".........[*] List is archived - un-archiving")
+				destination_list.open()
+
 			log(".........[*] Changing board")
 			c.change_board(dest_board.id, destination_list.id)
 
