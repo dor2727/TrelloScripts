@@ -20,12 +20,22 @@ Similarly for "Reading" and "Reading - Backlog"
 	3.3) "Reading - Backlog" has a label "ToReading"
 
 """
-
+LABEL_COLOR = {
+	"Done": "green",
+	"ToBacklog": "lime",
+	"ToReading": "lime",
+	"TookInspiration": "green",
+	"Wont do": "black",
+}
 
 def sync_boards(source_board, dest_board, label_name):
 	log(f"..[*] Synching cards : \"{source_board.name}\" --> \"{dest_board.name}\"")
 
 	label = get_item(source_board.get_labels(), label_name)
+	if label is None:
+		log(f"....[*] Creating label ({label_name})")
+		source_board.add_label(label_name, LABEL_COLOR[label_name])
+
 	dest_lists = dest_board.all_lists()
 
 	# log("...[*] Iterating cards")
