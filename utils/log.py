@@ -41,6 +41,8 @@ def log(s):
 			f.write('\n' + s)
 
 def log_initialize():
+	if not os.path.exists(os.path.dirname(LOGFILE)):
+		os.mkdir(os.path.dirname(LOGFILE))
 	log("-------------")
 	log(datetime.datetime.now().strftime("%Y/%m/%d %H:%M"))
 

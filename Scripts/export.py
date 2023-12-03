@@ -71,6 +71,9 @@ def export_board(client, folder_name, board):
 	file.close()
 
 def initialize_export_folder():
+	if not os.path.exists(os.path.join(MAIN_FOLDER, "Exports")):
+		os.mkdir(os.path.join(MAIN_FOLDER, "Exports"))
+
 	log("[*] creating folder")
 	folder_name = os.path.join(
 		MAIN_FOLDER,
