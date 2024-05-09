@@ -37,7 +37,7 @@ def get_boards_by_name(all_boards, *names):
 @initialize_logfile("card_fix.log")
 def main():
 	all_boards = get_all_boards()
-	boards = get_boards_by_name(all_boards, "Reading", "Games", "Blog Projects", "Collection", "Cooking", "Breath", "Yoga")
+	boards = get_boards_by_name(all_boards, "Reading", "Games", "Blog Projects", "Collection", "Cooking", "Breath", "Yoga", "Book Recomendations")
 	boards_cover = get_boards_by_name(all_boards, "Cooking")
 
 	log("[*] Fixing Description/Title to Attachment : Iterating cards")
