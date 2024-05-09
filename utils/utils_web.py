@@ -27,9 +27,13 @@ def get_domain(url):
 	return urlparse(url).netloc
 
 def get_bs(url):
-	req = requests.get(url, headers=headers)
-	if not req.ok:
-		log(f".....[!] Failed getting URL: {url}")
+	try:
+		req = requests.get(url, headers=headers)
+		if not req.ok:
+			log(f".....[!] Failed getting URL: {url}")
+			return None
+	except requests.RequestException as exc:
+		log(f".....[!] Failed getting URL: {url} ; {exc=}")
 		return None
 
 	bs = BeautifulSoup(req.content, features="lxml")
