@@ -3,6 +3,7 @@
 import os
 import json
 import datetime
+from functools import lru_cache
 
 from TrelloScripts.utils.consts import *
 from TrelloScripts.utils.log    import log, initialize_logfile
@@ -28,6 +29,16 @@ EXPORT_PARAMETERS = {
 	"organization"     : "false",
 }
 
+@lru_cache(maxsize=None)
+def get_organization(client, organization_id: str) -> str:
+	try:
+		# this line may fail due to ConnectionError
+		json_data = client.fetch_json(f"/organizations/{organization_id}")
+		# this line may fail due to KeyError
+		return json_data["displayName"]
+	except:
+		return UNKNOWN_ORGANIZATION_FOLDER
+
 def export_board(client, folder_name, board):
 	log(f"..[*] Exporting {board.name} - {board.id}")
 
@@ -40,9 +51,12 @@ def export_board(client, folder_name, board):
 
 	# getting the organization
 	if json_data["idOrganization"]:
-		organization = client.get_organization( json_data["idOrganization"] )
-		organization_name = ORGANIZATIONS_REVERSE.get(organization.name, UNKNOWN_ORGANIZATION_FOLDER)
+		organization_name = get_organization(client, json_data["idOrganization"])
 	else:
+		if json_data["closed"]:
+			organization_name = "closed"
+			log(f"....[*] Skipping (closed) : {board.name} - {board.id}")
+			return
 		organization_name = UNKNOWN_ORGANIZATION_FOLDER
 
 	board_folder = os.path.join(
