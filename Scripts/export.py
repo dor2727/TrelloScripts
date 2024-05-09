@@ -55,9 +55,8 @@ def export_board(client, folder_name, board):
 	else:
 		if json_data["closed"]:
 			organization_name = "closed"
-			log(f"....[*] Skipping (closed) : {board.name} - {board.id}")
-			return
-		organization_name = UNKNOWN_ORGANIZATION_FOLDER
+		else:
+			organization_name = UNKNOWN_ORGANIZATION_FOLDER
 
 	board_folder = os.path.join(
 		folder_name,
@@ -81,7 +80,7 @@ def export_board(client, folder_name, board):
 	)
 
 	c = file.write(json.dumps(json_data, indent = 2, separators=(',', ': ')))
-	print(f"....[*] wrote {c:7} bytes")
+	log(f"....[*] wrote {c:7} bytes \t;\t {organization_name=}")
 	file.close()
 
 def initialize_export_folder():
