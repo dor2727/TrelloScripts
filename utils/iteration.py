@@ -40,10 +40,11 @@ def iterate_cards(
 	boards_filter: filter | list[str] | None=None,
 ):
 	boards = init(log_name, boards_filter)
-	breakpoint()
 
 	log("[*] Iterating cards")
 	for board in boards:
+		log(f"..[*] Iterating {board.name}")
+		
 		labels = board.get_labels()
 
 		for card in board.all_cards():
