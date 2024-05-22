@@ -1,13 +1,7 @@
-__pycache__/*
-*/__pycache__/*
+__pycache__/
 
 Logs
 Exports
 Plans
 
 secrets
-key
-secret
-token
-
-temp.py

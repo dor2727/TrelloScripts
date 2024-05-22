@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 
+from TrelloScripts.Classes import FriendCardUpdater
 from TrelloScripts.utils.consts import *
-from TrelloScripts.utils.log    import log, initialize_logfile
-from TrelloScripts.utils.utils  import *
-from TrelloScripts.Classes		import FriendCardUpdater
+from TrelloScripts.utils.log import initialize_logfile, log
+from TrelloScripts.utils.utils import *
 
 set_verbose(4)
-
-
 
 
 @initialize_logfile("friends_updater.log")
@@ -23,5 +21,5 @@ def main():
 	log("[*] Done")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 	main()

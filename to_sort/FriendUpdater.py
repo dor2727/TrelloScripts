@@ -1,9 +1,7 @@
-
 import datetime
 
 from ..utils.log import log
 from ..utils.utils import get_item
-
 
 LABELS = [
 	"Last week",
@@ -15,21 +13,20 @@ LABELS = [
 	"too much",
 ]
 
-LABEL_WEEK     = "Last week"
-LABEL_2_WEEKS  = "More than a week"
-LABEL_MONTH    = "More than 2 weeks"
+LABEL_WEEK = "Last week"
+LABEL_2_WEEKS = "More than a week"
+LABEL_MONTH = "More than 2 weeks"
 LABEL_2_MONTHS = "More than a month"
 LABEL_6_MONTHS = "More than 2 months"
-LABEL_YEAR     = "More than 6 months"
+LABEL_YEAR = "More than 6 months"
 LABEL_TOO_MUCH = "too much"
 
 
-
-class CardUpdater(object):
+class CardUpdater:
 	def __init__(self, card, friends_board):
-		self.card  = card
+		self.card = card
 		self.board = friends_board
-		
+
 		self._set_labels()
 
 		# define now only once
@@ -42,12 +39,12 @@ class CardUpdater(object):
 
 		# the labels are
 		# week, 14, month, 2 month, 6 month, year, too much
-		self.label_week     = get_item(self._all_labels, LABEL_WEEK)
-		self.label_2_weeks  = get_item(self._all_labels, LABEL_2_WEEKS)
-		self.label_month    = get_item(self._all_labels, LABEL_MONTH)
+		self.label_week = get_item(self._all_labels, LABEL_WEEK)
+		self.label_2_weeks = get_item(self._all_labels, LABEL_2_WEEKS)
+		self.label_month = get_item(self._all_labels, LABEL_MONTH)
 		self.label_2_months = get_item(self._all_labels, LABEL_2_MONTHS)
 		self.label_6_months = get_item(self._all_labels, LABEL_6_MONTHS)
-		self.label_year     = get_item(self._all_labels, LABEL_YEAR)
+		self.label_year = get_item(self._all_labels, LABEL_YEAR)
 		self.label_too_much = get_item(self._all_labels, LABEL_TOO_MUCH)
 
 		self.date_labels = [
@@ -64,15 +61,11 @@ class CardUpdater(object):
 	def line_to_datetime(line):
 		return datetime.datetime.strptime(line[:10], "%Y/%m/%d")
 
-
 	def get_all_dates(self):
 		# the description is multi-lined,
 		# each line is a date: yyyy/mm/dd
 		# 				   or: yyyy/mm/dd (phone)
-		return map(
-			self.line_to_datetime,
-			self.card.description.splitlines()
-		)
+		return map(self.line_to_datetime, self.card.description.splitlines())
 
 	def remove_date_labels(self):
 		log("........[*] Removing date labels")
@@ -82,7 +75,7 @@ class CardUpdater(object):
 	def add_date_label(self):
 		try:
 			date = max(self.get_all_dates())
-		except ValueError: # ValueError: max() arg is an empty sequence
+		except ValueError:  # ValueError: max() arg is an empty sequence
 			return
 
 		delta = (self.now - date).days
@@ -98,10 +91,10 @@ class CardUpdater(object):
 		elif delta <= 30:
 			log(f"......[*] Adding label : {LABEL_MONTH}")
 			self.card.add_label(self.label_month)
-		elif delta <= 30*2:
+		elif delta <= 30 * 2:
 			log(f"......[*] Adding label : {LABEL_2_MONTHS}")
 			self.card.add_label(self.label_2_months)
-		elif delta <= 30*6:
+		elif delta <= 30 * 6:
 			log(f"......[*] Adding label : {LABEL_6_MONTHS}")
 			self.card.add_label(self.label_6_months)
 		elif delta <= 365:
@@ -113,15 +106,15 @@ class CardUpdater(object):
 
 	def reorder_dates(self):
 		self.card.set_description(
-			'\n'.join(
+			"\n".join(
 				map(
 					str.strip,
 					sorted(
 						self.card.description.splitlines(),
 						key=self.line_to_datetime,
-						reverse=True
-					)
-				)
+						reverse=True,
+					),
+				),
 			)
 		)
 

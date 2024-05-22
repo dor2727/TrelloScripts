@@ -1,12 +1,13 @@
 from ..utils.log import log
-from ..utils.utils import get_item, read_link
+from ..utils.utils import get_item
 
 _YOUTUBE = " - YouTube"
 _TASTE_OF_HOME = " Recipe: How to Make It"
 _10_DAKOT = " | מתכונים ב10 דקות"
 _KENJI = " | Kenji's Cooking Show"
 
-class CardUpdater(object):
+
+class CardUpdater:
 	def __init__(self, card, all_labels):
 		self.card = card
 		self.all_labels = all_labels
@@ -19,7 +20,7 @@ class CardUpdater(object):
 				if label is not None and label not in self.card.labels:
 					self.card.add_label(label)
 
-			return s[:-len(suffix)]
+			return s[: -len(suffix)]
 
 		return s
 

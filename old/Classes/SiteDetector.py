@@ -1,6 +1,3 @@
-from ..utils.log import log
-from ..utils.utils import get_item, read_link
-
 Url = Label = str
 SITES: dict[Url, Label] = {
 	"quantamagazine.org": "quanta",
@@ -10,10 +7,12 @@ SITES: dict[Url, Label] = {
 	# arxiv
 }
 
-class CardUpdater(object):
+
+class CardUpdater:
 	def __init__(self, card, all_labels):
 		self.card = card
 		self.all_labels = all_labels
+
 
 """
 TODO:

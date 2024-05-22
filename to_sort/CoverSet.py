@@ -1,8 +1,8 @@
 from ..utils.log import log
-from ..utils.utils import get_item, read_link
 from ..utils.utils_web import get_cover_url
 
-class CardUpdater(object):
+
+class CardUpdater:
 	def __init__(self, card):
 		self.card = card
 
@@ -12,12 +12,12 @@ class CardUpdater(object):
 				if cover_url := get_cover_url(attachment["url"]):
 					return cover_url
 
-		log(f"..........[*] No cover url found. Skipping.")
+		log("..........[*] No cover url found. Skipping.")
 		return None
 
 	def set_card_cover(self):
 		if cover_url := self.get_cover_url():
-			log(f"....[*] Setting cover : {self.card.name} : \"{cover_url}\"")
+			log(f'....[*] Setting cover : {self.card.name} : "{cover_url}"')
 			self.card.attach(url=cover_url, setCover=True)
 
 	def is_cover_set(self):

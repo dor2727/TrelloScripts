@@ -1,26 +1,24 @@
 from ..utils.log import log
-from ..utils.utils import get_item, read_link, get_first_attachment
+from ..utils.utils import get_first_attachment, read_link
 
 
-class CardUpdater(object):
+class CardUpdater:
 	def __init__(self, card):
 		self.card = card
 
 	def get_name(self):
 		if len(self.card.attachments) == 0:
-			log(f".....[*] No attachments. Skipping.")
+			log(".....[*] No attachments. Skipping.")
 			return None
 
 		if len(self.card.attachments) > 1:
-			log(f".....[w] More than 1 attachment! Using the first one.")
-
+			log(".....[w] More than 1 attachment! Using the first one.")
 
 		attachment = get_first_attachment(self.card)
 		if "url" in attachment:
 			return read_link(attachment["url"])
 
 		return None
-
 
 	def set_card_name(self):
 		new_name = self.get_name()

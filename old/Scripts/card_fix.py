@@ -1,17 +1,14 @@
 #!/usr/bin/env python3
 
+from TrelloScripts.Classes import AttachmentCardUpdater, CoverSetCardUpdater, TitleCardUpdater, TitleStripCardUpdater
 from TrelloScripts.utils.consts import *
-from TrelloScripts.utils.log    import log, initialize_logfile
-from TrelloScripts.utils.utils  import *
-from TrelloScripts.Classes      import	TitleCardUpdater     , \
-								    	TitleStripCardUpdater, \
-								    	AttachmentCardUpdater, \
-										CoverSetCardUpdater
+from TrelloScripts.utils.log import initialize_logfile, log
+from TrelloScripts.utils.utils import *
 
 set_verbose(8)
 
 
-def iterate_boards(cls, boards, requires_all_labels = False):
+def iterate_boards(cls, boards, requires_all_labels=False):
 	for board in boards:
 		log(f"..[*] Iterating {board.name}")
 
@@ -25,39 +22,38 @@ def iterate_boards(cls, boards, requires_all_labels = False):
 			c = cls(card, *args)
 			c.update_card()
 
+
 def get_boards_by_name(all_boards, names):
-	return sum(
-		(
-			[b for b in all_boards if name in b.name]
-			for name in names
-		),
-		[]
-	)
+	return sum(([b for b in all_boards if name in b.name] for name in names), [])
+
 
 @initialize_logfile("card_fix.log")
 def main():
 	all_boards = get_all_boards()
-	boards = get_boards_by_name(all_boards, [
-		"Reading",
-		"Courses",
-		"Dr K",
-		"Books",
-
-		"Computer Improvements",
-		"Games",
-		"Shopping",
-
-		"Cooking",
-
-		"Links I Liked",
-		"Open Tabs Dump",
-
-		"Anime",
-		"Movies",
-		"Podcasts",
-		"TV",
-		"Youtube",
-	])
+	boards = get_boards_by_name(
+		all_boards,
+		[
+			"Reading",
+			"Courses",
+			"Dr K",
+			"Books",
+			#
+			"Computer Improvements",
+			"Games",
+			"Shopping",
+			#
+			"Cooking",
+			#
+			"Links I Liked",
+			"Open Tabs Dump",
+			#
+			"Anime",
+			"Movies",
+			"Podcasts",
+			"TV",
+			"Youtube",
+		],
+	)
 	boards_cover = get_boards_by_name(all_boards, "Cooking")
 
 	log("[*] Fixing Description/Title to Attachment : Iterating cards")
@@ -75,5 +71,5 @@ def main():
 	log("[*] Done")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 	main()
