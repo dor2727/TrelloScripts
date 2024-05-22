@@ -1,6 +1,7 @@
 from .consts          import *
-from .log             import log, initialize_logfile
+from .log             import log, initialize_logfile, set_logfile, log_initialize
 from .utils           import *
+from .iteration       import iterate_boards, iterate_cards
 
 # monkey patch
 # https://github.com/sarumont/py-trello/issues/373

@@ -12,24 +12,9 @@ def set_verbose(verbose):
 
 
 LOGFILE = os.path.join(MAIN_FOLDER, "Logs", "tests.log")
-def set_logfile(file_name=None, absolute_path=None):
+def set_logfile(log_name: str):
 	global LOGFILE
-
-	if absolute_path is not None:
-		if '..' in absolute_path:
-			raise ValueError("\"..\" is not allowed in a file_name")
-
-		LOGFILE = absolute_path
-		return
-
-	if file_name:
-		if '..' in file_name:
-			raise ValueError("\"..\" is not allowed in a file_name")
-
-		LOGFILE = os.path.join(MAIN_FOLDER, "Logs", file_name)
-		return
-
-	raise ValueError("No file name specified")
+	LOGFILE = os.path.join(MAIN_FOLDER, "Logs", f"{log_name}.log")
 
 
 _GET_INITIAL_DOTS = re.compile("^\\.*")
@@ -46,10 +31,10 @@ def log_initialize():
 	log("-------------")
 	log(datetime.datetime.now().strftime("%Y/%m/%d %H:%M"))
 
-def initialize_logfile(*log_args, **log_kwargs):
+def initialize_logfile(log_name: str):
 	def dec(func):
 		def inner(*args, **kwargs):
-			set_logfile(*log_args, **log_kwargs)
+			set_logfile(log_name)
 			log_initialize()
 
 			return func(*args, **kwargs)
