@@ -5,7 +5,7 @@ from trello import Board, Card, Label
 from TrelloScripts.utils import get_first_attachment, get_item, is_url, iterate_cards, log, read_link
 
 
-def main():
+def main() -> None:
 	if len(sys.argv) == 1:
 		boards_filter = None  # all boards
 	else:
@@ -23,11 +23,11 @@ def main():
 	)
 
 
-def _print_card(card):
+def _print_card(card: Card) -> None:
 	log(f'....[*] found card in board "{card.board.name}" : in list "{card.get_list().name}" : "{card.name}"')
 
 
-def move_description_url_to_attachment(card: Card):
+def move_description_url_to_attachment(card: Card) -> None:
 	if card.description and is_url(card.description):
 		_print_card(card)
 		log(f"......[*] setting attachment to card: {card.description}")
@@ -35,7 +35,7 @@ def move_description_url_to_attachment(card: Card):
 		card.set_description("")
 
 
-def move_title_url_to_attachment(card: Card):
+def move_title_url_to_attachment(card: Card) -> None:
 	if is_url(card.name):
 		_print_card(card)
 		log(f"......[*] setting attachment to card: {card.name}")
@@ -44,7 +44,7 @@ def move_title_url_to_attachment(card: Card):
 		card.set_name(read_link(card.name) or "null")
 
 
-def fix_null_title(card: Card):
+def fix_null_title(card: Card) -> None:
 	if card.name == "null":
 		_print_card(card)
 
@@ -71,7 +71,7 @@ STRIPS = {
 }
 
 
-def strip_title(card: Card, board_labels: list[Label]):
+def strip_title(card: Card, board_labels: list[Label]) -> None:
 	name = card.name
 
 	for suffix, label_name in STRIPS.items():
@@ -91,7 +91,7 @@ def strip_title(card: Card, board_labels: list[Label]):
 		card.set_name(name)
 
 
-strip_title.requires_labels = True
+strip_title.requires_labels = True  # type: ignore[attr-defined]
 
 
 if __name__ == "__main__":

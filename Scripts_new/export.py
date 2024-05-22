@@ -8,7 +8,7 @@ from trello import Board, TrelloClient
 from TrelloScripts.utils import MAIN_FOLDER, iterate_boards, log
 
 
-def main():
+def main() -> None:
 	iterate_boards(
 		log_name="export",
 		apply_to_board=export_board,
@@ -18,10 +18,10 @@ def main():
 	)
 
 
-def export_board(client: TrelloClient, board: Board, root_folder_name: str):
+def export_board(client: TrelloClient, board: Board, root_folder_name: str) -> None:
 	log(f"..[*] Exporting {board.name} - {board.id}")
 
-	board_data = get_board_data()
+	board_data = get_board_data(client, board)
 
 	organization_name = get_organization_name(client, board_data)
 
@@ -33,7 +33,7 @@ def export_board(client: TrelloClient, board: Board, root_folder_name: str):
 	log(f"....[*] wrote {data_length:7} bytes \t;\t {organization_name=}")
 
 
-def initialize_export_folder():
+def initialize_export_folder() -> str:
 	if not os.path.exists(os.path.join(MAIN_FOLDER, "Exports")):
 		os.mkdir(os.path.join(MAIN_FOLDER, "Exports"))
 
@@ -47,7 +47,7 @@ def initialize_export_folder():
 	return folder_name
 
 
-def compress_export(folder_name):
+def compress_export(folder_name: str) -> int:
 	return os.system(f"tar -I 'gzip -9' --remove-files -cf {folder_name}.tar.gz {folder_name}")
 
 

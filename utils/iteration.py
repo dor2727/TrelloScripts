@@ -11,9 +11,9 @@ def iterate_boards(
 	log_name: str,
 	apply_to_board: Callable[[TrelloClient, Board, Args], bool],
 	boards_filter: filter | list[str] | None = None,
-	pre_iteration: Callable[[None], [Args]] | None = None,
+	pre_iteration: Callable[[], Args] | None = None,
 	post_iteration: Callable[[Args], None] | None = None,
-):
+) -> None:
 	client, boards = init(log_name, boards_filter)
 
 	# pre-iteration
@@ -37,9 +37,9 @@ def iterate_boards(
 
 def iterate_cards(
 	log_name: str,
-	apply_to_card: list[callable],
+	apply_to_card: list[Callable],
 	boards_filter: filter | list[str] | None = None,
-):
+) -> None:
 	_, boards = init(log_name, boards_filter)
 
 	log("[*] Iterating cards")
