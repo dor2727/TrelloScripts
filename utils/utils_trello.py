@@ -1,9 +1,8 @@
-#!/usr/bin/env python3
 import os
 
 from trello import TrelloClient
 
-from .consts import *
+from .consts import MAIN_FOLDER
 from .log import log
 
 #
@@ -13,8 +12,9 @@ from .log import log
 
 def try_read(file_path):
 	try:
-		return open(file_path).read().strip()
-	except:
+		with open(file_path) as f:
+			return f.read().strip()
+	except Exception:
 		return None
 
 
@@ -70,14 +70,14 @@ def get_item(all_list, item_name, case_sensitive=True):
 
 	try:
 		return next(filter(filter_function, all_list))
-	except:
+	except StopIteration:
 		return None
 
 
 def is_labeled(card, label_name=None):
 	# if label_name is a string, check if the card has that label
 	if label_name:
-		return any(l.name == label_name for l in card.labels)
+		return any(label.name == label_name for label in card.labels)
 	# Otherwise, simply check if there are any labels
 	else:
 		return bool(card.labels)

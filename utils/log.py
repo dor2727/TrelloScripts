@@ -2,7 +2,7 @@ import datetime
 import os
 import re
 
-from .consts import *
+from .consts import MAIN_FOLDER
 
 VERBOSE = 1000
 

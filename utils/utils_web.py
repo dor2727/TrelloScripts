@@ -1,13 +1,14 @@
 import re
 import urllib
+from urllib.parse import unquote, urlparse
+
 import requests
-from urllib.parse import urlparse, unquote
 from bs4 import BeautifulSoup
 
 from .log import log
 
 headers = {
-    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:90.0) Gecko/20100101 Firefox/90.0",
+	"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:90.0) Gecko/20100101 Firefox/90.0",
 }
 
 
@@ -15,16 +16,18 @@ headers = {
 # An exported utility function
 #
 _allowed_schemes = ["https", "http"]
+
+
 def is_url(url):
-	if '\n' in url:
+	if "\n" in url:
 		return False
 	scheme = urllib.parse.urlparse(url).scheme
 	return scheme in _allowed_schemes
 
 
-
 def get_domain(url):
 	return urlparse(url).netloc
+
 
 def get_bs(url):
 	try:
@@ -39,6 +42,7 @@ def get_bs(url):
 	bs = BeautifulSoup(req.content, features="lxml")
 	return bs
 
+
 def url_to_bs(func):
 	def inner(url, *args, **kwargs):
 		bs = get_bs(url)
@@ -48,7 +52,9 @@ def url_to_bs(func):
 			return None
 
 		return func(bs, *args, **kwargs)
+
 	return inner
+
 
 #
 # The exported function
@@ -58,13 +64,14 @@ def read_link(url):
 
 	if domain == "www.reddit.com":
 		return read_link_reddit(url)
-	elif domain in ("www.youtube.com", "youtu.be"): # m.youtube.com
+	elif domain in ("www.youtube.com", "youtu.be"):  # m.youtube.com
 		return read_link_youtube(url)
 	else:
 		if url.lower().endswith(".pdf"):
 			return read_link_pdf(url)
 		else:
 			return read_link_other(url)
+
 
 @url_to_bs
 def read_link_reddit(bs):
@@ -73,6 +80,7 @@ def read_link_reddit(bs):
 
 	return post_name
 
+
 @url_to_bs
 def read_link_youtube(bs):
 	# it should return "<video name> - YouTube"
@@ -80,12 +88,14 @@ def read_link_youtube(bs):
 
 	return web_page_title
 
+
 def read_link_pdf(url):
-	return unquote(url).split('/')[-1]
+	return unquote(url).split("/")[-1]
+
 
 @url_to_bs
 def read_link_other(bs):
-	title = bs.find('title').text
+	title = bs.find("title").text
 	log(f".....[*] Setting title: {title}")
 	return title
 
@@ -99,6 +109,7 @@ def get_cover_url(url):
 		return get_cover_url_youtube_full(url)
 	elif domain == "youtu.be":
 		return get_cover_url_youtube_short(url)
+
 
 @url_to_bs
 def get_cover_url_reddit(bs):
@@ -119,16 +130,22 @@ def get_cover_url_reddit(bs):
 
 
 YOUTUBE_THUMBNAIL_TEMPLATE = "http://img.youtube.com/vi/%s/0.jpg"
+
+
 def get_cover_url_from_youtube_video_id(video_id):
 	return YOUTUBE_THUMBNAIL_TEMPLATE % video_id
 
+
 YOUTUBE_PATTERN_FULL = re.compile("(?<=v=).{11}")
+
+
 def get_cover_url_youtube_full(url):
 	try:
 		video_id = YOUTUBE_PATTERN_FULL.findall(url)[0]
 		return get_cover_url_from_youtube_video_id(video_id)
 	except:
 		return
+
 
 def get_cover_url_youtube_short(url):
 	try:

@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 
-import os
-import json
 import datetime
-from functools import lru_cache
-
-from TrelloScripts.utils import log, iterate_boards
+import json
+import os
 
 from trello import Board, TrelloClient
+from TrelloScripts.utils import MAIN_FOLDER, iterate_boards, log
+
 
 def main():
 	iterate_boards(
@@ -33,6 +32,7 @@ def export_board(client: TrelloClient, board: Board, root_folder_name: str):
 
 	log(f"....[*] wrote {data_length:7} bytes \t;\t {organization_name=}")
 
+
 def initialize_export_folder():
 	if not os.path.exists(os.path.join(MAIN_FOLDER, "Exports")):
 		os.mkdir(os.path.join(MAIN_FOLDER, "Exports"))
@@ -41,39 +41,44 @@ def initialize_export_folder():
 	folder_name = os.path.join(
 		MAIN_FOLDER,
 		"Exports",
-		datetime.datetime.now().strftime('%Y.%m.%d_%H.%M')
+		datetime.datetime.now().strftime("%Y.%m.%d_%H.%M"),
 	)
 	os.mkdir(folder_name)
 	return folder_name
 
+
 def compress_export(folder_name):
 	return os.system(f"tar -I 'gzip -9' --remove-files -cf {folder_name}.tar.gz {folder_name}")
+
 
 #
 # Export Board Utils
 #
 EXPORT_PARAMETERS = {
-	"fields"           : "all",
-	"actions"          : "all",
-	"action_fields"    : "all",
-	"actions_limit"    : 1000 ,
-	"cards"            : "all",
-	"card_fields"      : "all",
-	"card_attachments" : "true" ,
-	"labels"           : "all",
-	"lists"            : "all",
-	"list_fields"      : "all",
-	"members"          : "all",
-	"member_fields"    : "all",
-	"checklists"       : "all",
-	"checklist_fields" : "all",
-	"organization"     : "true",
+	"fields": "all",
+	"actions": "all",
+	"action_fields": "all",
+	"actions_limit": 1000,
+	"cards": "all",
+	"card_fields": "all",
+	"card_attachments": "true",
+	"labels": "all",
+	"lists": "all",
+	"list_fields": "all",
+	"members": "all",
+	"member_fields": "all",
+	"checklists": "all",
+	"checklist_fields": "all",
+	"organization": "true",
 }
+
+
 def get_board_data(client: TrelloClient, board: Board) -> dict:
 	return client.fetch_json(
 		"/boards/" + board.id,
-		query_params=EXPORT_PARAMETERS
+		query_params=EXPORT_PARAMETERS,
 	)
+
 
 def get_organization_name(client: TrelloClient, board_data: dict) -> str:
 	if board_data["closed"]:
@@ -81,6 +86,7 @@ def get_organization_name(client: TrelloClient, board_data: dict) -> str:
 	else:
 		organization_name = board_data.get("organization", {}).get("name", "Unknown_organization")
 	return organization_name
+
 
 # file location:
 # 	export / <date> / <organization name> / <board id>_<board name>.json
@@ -95,14 +101,16 @@ def get_folder(root_folder_name: str, organization_name: str) -> str:
 
 	return folder
 
+
 def get_file_name(board: Board) -> str:
 	# board.name may include '/', which is replaced by '_'
 	return f"{board.id}_{board.name.replace('/', '_')}.json"
 
+
 def dump_board_data_to_file(full_file_path: str, board_data: dict) -> int:
-	with open(full_file_path, 'w') as file:
-		return file.write(json.dumps(board_data, indent = 2, separators=(',', ': ')))
+	with open(full_file_path, "w") as file:
+		return file.write(json.dumps(board_data, indent=2, separators=(",", ": ")))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 	main()
