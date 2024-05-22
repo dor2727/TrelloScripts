@@ -25,7 +25,7 @@ def iterate_boards(cls, boards, requires_all_labels = False):
 			c = cls(card, *args)
 			c.update_card()
 
-def get_boards_by_name(all_boards, *names):
+def get_boards_by_name(all_boards, names):
 	return sum(
 		(
 			[b for b in all_boards if name in b.name]
@@ -37,7 +37,27 @@ def get_boards_by_name(all_boards, *names):
 @initialize_logfile("card_fix.log")
 def main():
 	all_boards = get_all_boards()
-	boards = get_boards_by_name(all_boards, "Reading", "Games", "Blog Projects", "Collection", "Cooking", "Breath", "Yoga", "Book Recomendations")
+	boards = get_boards_by_name(all_boards, [
+		"Reading",
+		"Courses",
+		"Dr K",
+		"Books",
+
+		"Computer Improvements",
+		"Games",
+		"Shopping",
+
+		"Cooking",
+
+		"Links I Liked",
+		"Open Tabs Dump",
+
+		"Anime",
+		"Movies",
+		"Podcasts",
+		"TV",
+		"Youtube",
+	])
 	boards_cover = get_boards_by_name(all_boards, "Cooking")
 
 	log("[*] Fixing Description/Title to Attachment : Iterating cards")
