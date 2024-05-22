@@ -1,20 +1,20 @@
 from typing import Callable
 
-from TrelloScripts.utils.log import set_logfile, log_initialize, log
-from TrelloScripts.utils.utils import get_client, get_all_boards
-
 from trello import Board, TrelloClient
+from TrelloScripts.utils.log import log, log_initialize, set_logfile
+from TrelloScripts.utils.utils import get_all_boards, get_client
 
 Args = tuple
+
 
 def iterate_boards(
 	log_name: str,
 	apply_to_board: Callable[[TrelloClient, Board, Args], bool],
-	boards_filter: filter | list[str] | None=None,
-	pre_iteration: Callable[[None], [Args]] | None=None,
-	post_iteration: Callable[[Args], None] | None=None,
+	boards_filter: filter | list[str] | None = None,
+	pre_iteration: Callable[[None], [Args]] | None = None,
+	post_iteration: Callable[[Args], None] | None = None,
 ):
-	boards = init(log_name, boards_filter)
+	client, boards = init(log_name, boards_filter)
 
 	# pre-iteration
 	if pre_iteration is not None:
@@ -34,17 +34,18 @@ def iterate_boards(
 
 	log("[*] Done")
 
+
 def iterate_cards(
 	log_name: str,
 	apply_to_card: list[callable],
-	boards_filter: filter | list[str] | None=None,
+	boards_filter: filter | list[str] | None = None,
 ):
-	boards = init(log_name, boards_filter)
+	_, boards = init(log_name, boards_filter)
 
 	log("[*] Iterating cards")
 	for board in boards:
 		log(f"..[*] Iterating {board.name}")
-		
+
 		labels = board.get_labels()
 
 		for card in board.all_cards():
@@ -56,10 +57,11 @@ def iterate_cards(
 
 	log("[*] Done")
 
+
 #
 # Utils
 #
-def init(log_name: str, boards_filter: filter | list[str] | None=None) -> list[Board]:
+def init(log_name: str, boards_filter: filter | list[str] | None = None) -> tuple[TrelloClient, list[Board]]:
 	# init logging
 	set_logfile(log_name)
 	log_initialize()
@@ -69,7 +71,7 @@ def init(log_name: str, boards_filter: filter | list[str] | None=None) -> list[B
 	# init boards
 	all_boards = get_all_boards()
 	boards = filter_boards(all_boards, boards_filter)
-	return boards
+	return client, boards
 
 
 def filter_boards(all_boards: list[Board], boards_filter: filter | list[str] | None) -> list[Board]:
@@ -82,11 +84,6 @@ def filter_boards(all_boards: list[Board], boards_filter: filter | list[str] | N
 	else:
 		raise ValueError("Invalid boards_filter given")
 
+
 def get_boards_by_name(all_boards: list[Board], names: list[str]) -> list[Board]:
-	return sum(
-		(
-			[b for b in all_boards if name in b.name]
-			for name in names
-		),
-		[]
-	)
+	return sum(([b for b in all_boards if name in b.name] for name in names), [])
