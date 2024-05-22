@@ -58,3 +58,8 @@ repos:
       - id: prettier
         files: \.json$
         args: ["--parser", "json"]
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.10.0  # Use the latest version or a specific tag
+    hooks:
+      - id: mypy

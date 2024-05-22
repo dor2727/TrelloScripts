@@ -1,8 +1,8 @@
 from .consts import *
 from .iteration import iterate_boards, iterate_cards
-from .log import log, initialize_logfile, set_logfile, log_initialize
+from .log import log, set_logfile, log_initialize
 from .utils_trello import *
-from .utils_web import read_link, is_url
+from .utils_web import read_link, is_url, get_cover_url
 
 # ruff: noqa
 
@@ -12,7 +12,7 @@ import trello
 import json
 
 
-def patched_fetch_json(self, uri_path, http_method="GET", headers=None, query_params=None, post_args=None, files=None):
+def patched_fetch_json(self, uri_path, http_method="GET", headers=None, query_params=None, post_args=None, files=None):  # type: ignore
 	"""Fetch some JSON from Trello"""
 
 	# explicit values here to avoid mutable default values
