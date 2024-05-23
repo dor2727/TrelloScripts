@@ -2,7 +2,7 @@ from typing import Callable
 
 from trello import Board, TrelloClient
 from TrelloScripts.utils.log import log, log_initialize, set_logfile
-from TrelloScripts.utils.utils import get_all_boards, get_client
+from TrelloScripts.utils.utils_trello import get_all_boards, get_client
 
 Args = tuple
 
