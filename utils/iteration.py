@@ -1,6 +1,6 @@
 from typing import Callable
 
-from trello import Board, TrelloClient
+from trello import Board, Card, TrelloClient
 from TrelloScripts.utils.log import log, log_initialize, set_logfile
 from TrelloScripts.utils.utils_trello import get_all_boards, get_client
 
@@ -39,6 +39,7 @@ def iterate_cards(
 	log_name: str,
 	apply_to_card: list[Callable],
 	boards_filter: filter | list[str] | None = None,
+	skip_archived: bool = True,
 ) -> None:
 	_, boards = init(log_name, boards_filter)
 
@@ -49,6 +50,10 @@ def iterate_cards(
 		labels = board.get_labels()
 
 		for card in board.all_cards():
+			if skip_archived and is_card_archived(card):
+				log(f"........[*] Skipping archived card : {card.name}")
+				continue
+
 			for func in apply_to_card:
 				if getattr(func, "requires_labels", False):
 					func(card, labels)
@@ -56,6 +61,11 @@ def iterate_cards(
 					func(card)
 
 	log("[*] Done")
+
+
+def requires_lables(func: Callable) -> Callable:
+	func.requires_labels = True  # type: ignore[attr-defined]
+	return func
 
 
 #
@@ -87,3 +97,7 @@ def filter_boards(all_boards: list[Board], boards_filter: filter | list[str] | N
 
 def get_boards_by_name(all_boards: list[Board], names: list[str]) -> list[Board]:
 	return sum(([b for b in all_boards if name in b.name] for name in names), [])
+
+
+def is_card_archived(card: Card) -> bool:
+	return card.closed or card.get_list().closed

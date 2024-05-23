@@ -2,7 +2,7 @@
 import sys
 
 from trello import Board, Card, Label
-from TrelloScripts.utils import get_first_attachment, get_item, is_url, iterate_cards, log, read_link
+from TrelloScripts.utils import get_first_attachment, get_item, is_url, iterate_cards, log, read_link, requires_lables
 
 
 def main() -> None:
@@ -71,6 +71,7 @@ STRIPS = {
 }
 
 
+@requires_lables
 def strip_title(card: Card, board_labels: list[Label]) -> None:
 	name = card.name
 
@@ -89,9 +90,6 @@ def strip_title(card: Card, board_labels: list[Label]) -> None:
 	if name != card.name:
 		log(f"......[*] Fixing title : {card.name} -> {name}")
 		card.set_name(name)
-
-
-strip_title.requires_labels = True  # type: ignore[attr-defined]
 
 
 if __name__ == "__main__":
