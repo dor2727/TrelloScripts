@@ -2,7 +2,7 @@
 import sys
 
 from trello import Board, Card, Label
-from TrelloScripts.utils import get_first_attachment, get_item, is_url, iterate_cards, log, read_link, requires_lables
+from TrelloScripts.utils import get_first_attachment, get_item, is_url, iterate_cards, log, read_link, requires_lables, set_verbose
 
 
 def main() -> None:
@@ -13,8 +13,7 @@ def main() -> None:
 		def boards_filter(b: Board) -> bool:
 			return any(b.name in requested_board for requested_board in sys.argv[1:])
 
-		print(f"Usage: {sys.argv[0]} board_name [board_name ...]")
-		sys.exit(1)
+	set_verbose(9)  # verbose=10 shows "skipping archived card"
 
 	iterate_cards(
 		log_name="card_fix",

@@ -51,7 +51,7 @@ def iterate_cards(
 
 		for card in board.all_cards():
 			if skip_archived and is_card_archived(card):
-				log(f"........[*] Skipping archived card : {card.name}")
+				log(f"..........[*] Skipping archived card : {card.name}")
 				continue
 
 			for func in apply_to_card:
