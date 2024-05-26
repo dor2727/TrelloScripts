@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 from datetime import datetime
 from typing import Iterable
 
@@ -8,7 +9,7 @@ from TrelloScripts.utils import get_item, iterate_cards, log, requires_lables
 
 def main() -> None:
 	iterate_cards(
-		log_name="card_fix",
+		log_name=os.path.splitext(os.path.basename(__file__))[0],
 		apply_to_card=[print_card, remove_date_labels, add_date_label, reorder_dates],
 		boards_filter=lambda b: b.name == "Friends",
 	)

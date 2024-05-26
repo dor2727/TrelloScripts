@@ -10,7 +10,7 @@ from TrelloScripts.utils import MAIN_FOLDER, iterate_boards, log
 
 def main() -> None:
 	iterate_boards(
-		log_name="export",
+		log_name=os.path.splitext(os.path.basename(__file__))[0],
 		apply_to_board=export_board,
 		boards_filter=None,  # get all boards
 		pre_iteration=initialize_export_folder,

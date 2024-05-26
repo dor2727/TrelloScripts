@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 import sys
 
 from trello import Board, Card
@@ -9,7 +10,7 @@ def main() -> None:
 	# set_verbose(9)  # verbose=10 shows "skipping archived card"
 
 	iterate_cards(
-		log_name="card_fix",
+		log_name=os.path.splitext(os.path.basename(__file__))[0],
 		apply_to_card=[set_card_cover],
 		boards_filter=_get_boards_filter(),
 	)
