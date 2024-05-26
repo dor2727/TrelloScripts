@@ -173,6 +173,7 @@ def get_cover_url_youtube_full(url: Url) -> Url | None:
 def get_cover_url_youtube_short(url: Url) -> Url | None:
 	try:
 		assert url.startswith("https://youtu.be/")
+		url = url.split("?")[0]
 		assert len(url) == 28
 		video_id = url[17:]
 		return get_cover_url_from_youtube_video_id(video_id)
