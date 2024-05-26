@@ -2,10 +2,20 @@
 import sys
 
 from trello import Board, Card, Label
-from TrelloScripts.utils import get_first_attachment, get_item, is_url, iterate_cards, log, read_link, requires_lables, set_verbose
+from TrelloScripts.utils import BoardsFilter, get_first_attachment, get_item, is_url, iterate_cards, log, read_link, requires_lables, set_verbose
 
 
 def main() -> None:
+	set_verbose(9)  # verbose=10 shows "skipping archived card"
+
+	iterate_cards(
+		log_name="card_fix",
+		apply_to_card=[move_description_url_to_attachment, move_title_url_to_attachment, fix_null_title, strip_title],
+		boards_filter=_get_boards_filter(),
+	)
+
+
+def _get_boards_filter() -> BoardsFilter:
 	if len(sys.argv) == 1:
 		boards_filter = None  # all boards
 	else:
@@ -13,13 +23,7 @@ def main() -> None:
 		def boards_filter(b: Board) -> bool:
 			return any(b.name in requested_board for requested_board in sys.argv[1:])
 
-	set_verbose(9)  # verbose=10 shows "skipping archived card"
-
-	iterate_cards(
-		log_name="card_fix",
-		apply_to_card=[move_description_url_to_attachment, move_title_url_to_attachment, fix_null_title, strip_title],
-		boards_filter=boards_filter,
-	)
+	return boards_filter
 
 
 def _print_card(card: Card) -> None:

@@ -6,11 +6,13 @@ from TrelloScripts.utils.utils_trello import get_all_boards, get_client
 
 Args = tuple
 
+BoardsFilter = Callable[[Board], bool] | list[str] | None
+
 
 def iterate_boards(
 	log_name: str,
 	apply_to_board: Callable[[TrelloClient, Board, Args], bool],
-	boards_filter: filter | list[str] | None = None,
+	boards_filter: BoardsFilter = None,
 	pre_iteration: Callable[[], Args] | None = None,
 	post_iteration: Callable[[Args], None] | None = None,
 ) -> None:
@@ -38,7 +40,7 @@ def iterate_boards(
 def iterate_cards(
 	log_name: str,
 	apply_to_card: list[Callable],
-	boards_filter: filter | list[str] | None = None,
+	boards_filter: BoardsFilter = None,
 	skip_archived: bool = True,
 ) -> None:
 	_, boards = init(log_name, boards_filter)
@@ -71,7 +73,7 @@ def requires_lables(func: Callable) -> Callable:
 #
 # Utils
 #
-def init(log_name: str, boards_filter: filter | list[str] | None = None) -> tuple[TrelloClient, list[Board]]:
+def init(log_name: str, boards_filter: BoardsFilter = None) -> tuple[TrelloClient, list[Board]]:
 	# init logging
 	set_logfile(log_name)
 	log_initialize()
@@ -84,7 +86,7 @@ def init(log_name: str, boards_filter: filter | list[str] | None = None) -> tupl
 	return client, boards
 
 
-def filter_boards(all_boards: list[Board], boards_filter: filter | list[str] | None) -> list[Board]:
+def filter_boards(all_boards: list[Board], boards_filter: BoardsFilter) -> list[Board]:
 	if boards_filter is None:
 		return all_boards
 	elif isinstance(boards_filter, list):
