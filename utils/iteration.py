@@ -98,7 +98,7 @@ def filter_boards(all_boards: list[Board], boards_filter: BoardsFilter) -> list[
 
 
 def get_boards_by_name(all_boards: list[Board], names: list[str]) -> list[Board]:
-	return sum(([b for b in all_boards if name in b.name] for name in names), [])
+	return sum(([b for b in all_boards if name.lower() in b.name.lower()] for name in names), [])
 
 
 def is_card_archived(card: Card) -> bool:
