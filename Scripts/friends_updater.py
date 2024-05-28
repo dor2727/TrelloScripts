@@ -4,10 +4,12 @@ from datetime import datetime
 from typing import Iterable
 
 from trello import Card, Label
-from TrelloScripts.utils import get_item, iterate_cards, log, requires_lables
+from TrelloScripts.utils import get_item, iterate_cards, log, requires_lables, set_verbose
 
 
 def main() -> None:
+	set_verbose(4)  # 4 shows friend, 6 shows new label, 8 shows last met, 10 shows "skipping archived card"
+
 	iterate_cards(
 		log_name=os.path.splitext(os.path.basename(__file__))[0],
 		apply_to_card=[print_card, remove_date_labels, add_date_label, reorder_dates],

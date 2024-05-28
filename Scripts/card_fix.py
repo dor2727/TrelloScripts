@@ -7,7 +7,7 @@ from TrelloScripts.utils import BoardsFilter, get_first_attachment, get_item, is
 
 
 def main() -> None:
-	set_verbose(9)  # verbose=10 shows "skipping archived card"
+	set_verbose(6)  # 4 shows card, 6 shows new attachment & title & label, 10 shows "skipping archived card"
 
 	iterate_cards(
 		log_name=os.path.splitext(os.path.basename(__file__))[0],
