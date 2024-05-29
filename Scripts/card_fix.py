@@ -2,7 +2,7 @@
 import os
 import sys
 
-from trello import Board, Card, Label
+from trello import Card, Label
 from TrelloScripts.utils import BoardsFilter, get_first_attachment, get_item, is_url, iterate_cards, log, read_link, requires_lables, set_verbose
 
 
@@ -20,9 +20,7 @@ def _get_boards_filter() -> BoardsFilter:
 	if len(sys.argv) == 1:
 		boards_filter = None  # all boards
 	else:
-
-		def boards_filter(b: Board) -> bool:
-			return any(b.name in requested_board for requested_board in sys.argv[1:])
+		boards_filter = sys.argv[1:]
 
 	return boards_filter
 
