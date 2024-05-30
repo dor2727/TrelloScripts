@@ -16,7 +16,7 @@ def iterate_boards(
 	pre_iteration: Callable[[], Args] | None = None,
 	post_iteration: Callable[[Args], None] | None = None,
 ) -> None:
-	client, boards = init(log_name, boards_filter)
+	client, boards = _init(log_name, boards_filter)
 
 	# pre-iteration
 	if pre_iteration is not None:
@@ -43,7 +43,7 @@ def iterate_cards(
 	boards_filter: BoardsFilter = None,
 	skip_archived: bool = True,
 ) -> None:
-	_, boards = init(log_name, boards_filter)
+	_, boards = _init(log_name, boards_filter)
 
 	log("[*] Iterating cards")
 	for board in boards:
@@ -73,7 +73,7 @@ def requires_lables(func: Callable) -> Callable:
 #
 # Utils
 #
-def init(log_name: str, boards_filter: BoardsFilter = None) -> tuple[TrelloClient, list[Board]]:
+def _init(log_name: str, boards_filter: BoardsFilter = None) -> tuple[TrelloClient, list[Board]]:
 	# init logging
 	set_logfile(log_name)
 	log_initialize()
