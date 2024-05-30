@@ -30,6 +30,7 @@ def main() -> None:
 	for board_group in filter(bool, board_groups):
 		sync_boards(board_group)
 		sync_lists(board_group)
+		log("\n")
 
 	log("[*] Done")
 
@@ -125,7 +126,11 @@ def _move_card(card: Card, destination_data: list[BoardData]) -> bool:
 				log(".........[*] List is archived - un-archiving")
 				destination_list.open()
 
-			log(".........[*] Changing board")
+			if card.closed:
+				log(".........[*] Card is archived - un-archiving")
+				card.open()
+
+			log(f".........[*] Changing board (to {data.board.name} : {destination_list.name})")
 			card.change_board(data.board.id, destination_list.id)
 
 			log(".........[*] Done")
