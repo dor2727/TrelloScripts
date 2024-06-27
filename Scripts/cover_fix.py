@@ -19,7 +19,7 @@ def main() -> None:
 def _get_boards_filter() -> BoardsFilter:
 	boards_filter: BoardsFilter
 	if len(sys.argv) == 1:
-		boards_filter = ["cooking", "youtube", "games", "courses", "dr k", "books", "podcasts"]
+		boards_filter = ["cooking", "youtube", "games", "courses", "dr k", "books", "podcasts", "chen"]
 	else:
 		boards_filter = sys.argv[1:]
 
