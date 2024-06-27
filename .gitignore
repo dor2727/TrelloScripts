@@ -1,1 +1,9 @@
-../.config/Python/.gitignore
+__pycache__
+
+# Personal use
+Logs
+Exports
+Plans
+
+# secrets
+secrets
