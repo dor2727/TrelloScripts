@@ -1,7 +1,7 @@
 import re
 import urllib
 from typing import Any, Callable, TypeAlias, TypeVar
-from urllib.parse import unquote, urlparse
+from urllib.parse import urlparse
 
 import requests
 from bs4 import BeautifulSoup
@@ -32,34 +32,11 @@ def is_url(url: Url) -> bool:
 	return scheme in _ALLOWED_SCHEMES
 
 
-def read_link(url: Url) -> Title | None:
-	domain = get_domain(url)
-
-	if domain == "www.reddit.com":
-		return read_link_reddit(url)
-	elif domain in ("www.youtube.com", "youtu.be"):  # m.youtube.com
-		return read_link_youtube(url)
-	else:
-		if url.lower().endswith(".pdf"):
-			return read_link_pdf(url)
-		else:
-			return read_link_other(url)
-
-
-def get_cover_url(url: Url) -> Url | None:
-	domain = get_domain(url)
-
-	if domain == "www.reddit.com":
-		return get_cover_url_reddit(url)
-	elif domain in ("www.youtube.com", "m.youtube.com"):
-		return get_cover_url_youtube_full(url)
-	elif domain == "youtu.be":
-		return get_cover_url_youtube_short(url)
-
-
 #
-# read-link utils
+# Reading-link utils
 #
+
+
 def get_domain(url: Url) -> str:
 	return urlparse(url).netloc
 
@@ -81,14 +58,7 @@ def get_bs(url: Url) -> BeautifulSoup:
 T = TypeVar("T")
 
 
-def url_to_bs(
-	func: Callable[
-		[
-			BeautifulSoup,
-		],
-		T,
-	],
-) -> Callable[[Url], T]:
+def url_to_bs(func: Callable[[BeautifulSoup], T]) -> Callable[[Url], T]:
 	def inner(url: Url, *args: Any, **kwargs: Any) -> Any:
 		bs = get_bs(url)
 
@@ -101,34 +71,15 @@ def url_to_bs(
 	return inner
 
 
-#
-# Specific read-link functions
-#
-@url_to_bs
-def read_link_reddit(bs: BeautifulSoup) -> Title:
-	# from my manual test, bs.find_all("h1") brings two identical results.
-	post_name = bs.find("h1").text
+def get_cover_url(url: Url) -> Url | None:
+	domain = get_domain(url)
 
-	return post_name
-
-
-@url_to_bs
-def read_link_youtube(bs: BeautifulSoup) -> Title:
-	# it should return "<video name> - YouTube"
-	web_page_title = bs.find("title").text
-
-	return web_page_title
-
-
-def read_link_pdf(url: Url) -> Title:
-	return unquote(url).split("/")[-1]
-
-
-@url_to_bs
-def read_link_other(bs: BeautifulSoup) -> Title:
-	title = bs.find("title").text
-	log(f".....[*] Setting title: {title}")
-	return title
+	if domain == "www.reddit.com":
+		return get_cover_url_reddit(url)
+	elif domain in ("www.youtube.com", "m.youtube.com"):
+		return get_cover_url_youtube_full(url)
+	elif domain == "youtu.be":
+		return get_cover_url_youtube_short(url)
 
 
 #
