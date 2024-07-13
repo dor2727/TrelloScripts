@@ -36,7 +36,8 @@ def set_card_cover(card: Card) -> None:
 			log(f'......[*] Setting cover : {card.name} : "{cover_url}"')
 			card.attach(url=cover_url, setCover=True)
 		else:
-			log("........[*] No cover url found. Skipping.")
+			if card.attachments:
+				log("........[*] No cover url found. Skipping.")
 
 
 def _is_cover_set(card: Card) -> bool:
