@@ -2,8 +2,9 @@ from .consts import MAIN_FOLDER
 from .iteration import iterate_boards, iterate_cards, requires_lables, BoardsFilter, _init
 from .log import log, set_logfile, log_initialize, set_verbose
 from .utils_trello import get_item, get_first_attachment, get_client, get_all_boards, is_labeled
-from .utils_web import is_url, get_cover_url
+from .utils_web import is_url
 from .utils_web_read_link import read_link
+from .utils_web_get_cover_url import get_cover_url
 
 # ruff: noqa
 

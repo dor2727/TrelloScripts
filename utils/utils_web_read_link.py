@@ -1,17 +1,9 @@
-from typing import TypeAlias
 from urllib.parse import unquote
 
 from bs4 import BeautifulSoup
 
 from .log import log
-from .utils_web import get_domain, url_to_bs
-
-Url: TypeAlias = str
-Title: TypeAlias = str
-
-HEADERS = {
-	"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:90.0) Gecko/20100101 Firefox/90.0",
-}
+from .utils_web import Title, Url, get_domain, url_to_bs
 
 
 #
