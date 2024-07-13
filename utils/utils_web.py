@@ -114,11 +114,19 @@ YOUTUBE_PATTERN_FULL = re.compile("(?<=v=).{11}")
 
 
 def get_cover_url_youtube_full(url: Url) -> Url | None:
-	try:
-		video_id = YOUTUBE_PATTERN_FULL.findall(url)[0]
-		return get_cover_url_from_youtube_video_id(video_id)
-	except Exception:
-		return None
+	if "/shorts/" in url:
+		try:
+			video_id = re.findall("https://m.youtube.com/shorts/(.{11})", url)[0]
+			return get_cover_url_from_youtube_video_id(video_id)
+		except Exception:
+			return None
+
+	else:
+		try:
+			video_id = YOUTUBE_PATTERN_FULL.findall(url)[0]
+			return get_cover_url_from_youtube_video_id(video_id)
+		except Exception:
+			return None
 
 
 def get_cover_url_youtube_short(url: Url) -> Url | None:
