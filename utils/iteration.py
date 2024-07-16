@@ -1,3 +1,4 @@
+import re
 from typing import Callable
 
 from trello import Board, Card, TrelloClient
@@ -15,8 +16,9 @@ def iterate_boards(
 	boards_filter: BoardsFilter = None,
 	pre_iteration: Callable[[], Args] | None = None,
 	post_iteration: Callable[[Args], None] | None = None,
+	filter_out_old_boards: bool = True,
 ) -> None:
-	client, boards = _init(log_name, boards_filter)
+	client, boards = _init(log_name, boards_filter, filter_out_old_boards=filter_out_old_boards)
 
 	# pre-iteration
 	if pre_iteration is not None:
@@ -42,8 +44,9 @@ def iterate_cards(
 	apply_to_card: list[Callable],
 	boards_filter: BoardsFilter = None,
 	skip_archived: bool = True,
+	filter_out_old_boards: bool = True,
 ) -> None:
-	_, boards = _init(log_name, boards_filter)
+	_, boards = _init(log_name, boards_filter, filter_out_old_boards=filter_out_old_boards)
 
 	log("[*] Iterating cards")
 	for board in boards:
@@ -73,7 +76,7 @@ def requires_lables(func: Callable) -> Callable:
 #
 # Utils
 #
-def _init(log_name: str, boards_filter: BoardsFilter = None) -> tuple[TrelloClient, list[Board]]:
+def _init(log_name: str, boards_filter: BoardsFilter = None, filter_out_old_boards: bool = True) -> tuple[TrelloClient, list[Board]]:
 	# init logging
 	set_logfile(log_name)
 	log_initialize()
@@ -83,6 +86,10 @@ def _init(log_name: str, boards_filter: BoardsFilter = None) -> tuple[TrelloClie
 	# init boards
 	all_boards = get_all_boards()
 	boards = filter_boards(all_boards, boards_filter)
+
+	if filter_out_old_boards:
+		boards = list(filter(lambda b: re.search("\\bold\\b", b.name), boards))
+
 	return client, boards
 
 
