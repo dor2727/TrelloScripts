@@ -34,7 +34,10 @@ def set_card_cover(card: Card) -> None:
 	if not _is_cover_set(card):
 		if cover_url := _get_card_cover_url(card):
 			log(f'......[*] Setting cover : {card.name} : "{cover_url}"')
-			card.attach(url=cover_url, setCover=True)
+			try:
+				card.attach(url=cover_url, setCover=True)
+			except Exception:
+				log("........[X] Failed setting cover. Maybe the video is unavailable?")
 		else:
 			if card.attachments:
 				log("........[*] No cover url found. Skipping.")
