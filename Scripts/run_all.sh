@@ -1,8 +1,10 @@
 #!/bin/bash
 
-./export.py
+CURRENT_DIR="$(dirname "$(realpath "$0")")"
 
-./card_fix.py
-./cover_fix.py
-./friends_updater.py
-./reading_sync.py
+"$CURRENT_DIR/export.py"
+
+"$CURRENT_DIR/card_fix.py"
+"$CURRENT_DIR/cover_fix.py"
+"$CURRENT_DIR/friends_updater.py"
+"$CURRENT_DIR/reading_sync.py"
