@@ -15,6 +15,7 @@ def main() -> None:
 		boards_filter=None,  # get all boards
 		pre_iteration=initialize_export_folder,
 		post_iteration=compress_export,
+		filter_out_old_boards=False,
 	)
 
 
