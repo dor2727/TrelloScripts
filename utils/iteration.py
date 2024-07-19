@@ -88,7 +88,7 @@ def _init(log_name: str, boards_filter: BoardsFilter = None, filter_out_old_boar
 	boards = filter_boards(all_boards, boards_filter)
 
 	if filter_out_old_boards:
-		boards = list(filter(lambda b: re.search("\\bold\\b", b.name), boards))
+		boards = list(filter(lambda b: not re.search("\\bold\\b", b.name), boards))
 
 	return client, boards
 
