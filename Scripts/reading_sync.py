@@ -49,7 +49,7 @@ class BoardGroup:
 		return any(board is not None for board in [self.backlog, self.done, self.took_inspiration])
 
 	def __repr__(self) -> str:
-		get_attr_repr = lambda attr: f"{attr}: {getattr(getattr(self, attr), "name", "None")}"
+		get_attr_repr = lambda attr: f"{attr}: {getattr(getattr(self, attr), 'name', 'None')}"
 		attrs = ["main", "backlog", "done", "took_inspiration"]
 		all_attrs_repr = ", ".join(map(get_attr_repr, attrs))
 		return f"BoardGroup({all_attrs_repr})"
