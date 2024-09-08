@@ -93,15 +93,20 @@ def _init(log_name: str, boards_filter: BoardsFilter = None, filter_out_old_boar
 	return client, boards
 
 
-def filter_boards(all_boards: list[Board], boards_filter: BoardsFilter) -> list[Board]:
+def filter_boards(all_boards: list[Board], boards_filter: BoardsFilter, filter_out_closed_boards: bool = True) -> list[Board]:
 	if boards_filter is None:
-		return all_boards
+		boards_list = all_boards
 	elif isinstance(boards_filter, list):
-		return get_boards_by_name(all_boards, boards_filter)
+		boards_list = get_boards_by_name(all_boards, boards_filter)
 	elif callable(boards_filter):
-		return list(filter(boards_filter, all_boards))
+		boards_list = list(filter(boards_filter, all_boards))
 	else:
 		raise ValueError("Invalid boards_filter given")
+
+	if filter_out_closed_boards:
+		boards_list = list(filter(lambda b: not b.closed, boards_list))
+
+	return boards_list
 
 
 def get_boards_by_name(all_boards: list[Board], names: list[str]) -> list[Board]:
