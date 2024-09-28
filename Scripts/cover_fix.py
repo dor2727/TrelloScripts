@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 import os
-import sys
 
 from trello import Card
-from TrelloScripts.utils import BoardsFilter, get_cover_url, iterate_cards, log, set_verbose
+from TrelloScripts.utils import get_boards_filter, get_cover_url, iterate_cards, log, set_verbose
 
 
 def main() -> None:
@@ -12,18 +11,8 @@ def main() -> None:
 	iterate_cards(
 		log_name=os.path.splitext(os.path.basename(__file__))[0],
 		apply_to_card=[set_card_cover],
-		boards_filter=_get_boards_filter(),
+		boards_filter=get_boards_filter(default=["cooking", "youtube", "games", "courses", "dr k", "books", "podcasts", "chen"]),
 	)
-
-
-def _get_boards_filter() -> BoardsFilter:
-	boards_filter: BoardsFilter
-	if len(sys.argv) == 1:
-		boards_filter = ["cooking", "youtube", "games", "courses", "dr k", "books", "podcasts", "chen"]
-	else:
-		boards_filter = sys.argv[1:]
-
-	return boards_filter
 
 
 def _print_card(card: Card) -> None:

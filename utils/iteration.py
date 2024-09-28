@@ -1,4 +1,5 @@
 import re
+import sys
 from typing import Callable
 
 from trello import Board, Card, TrelloClient
@@ -91,6 +92,16 @@ def _init(log_name: str, boards_filter: BoardsFilter = None, filter_out_old_boar
 		boards = list(filter(lambda b: not re.search("\\bold\\b", b.name), boards))
 
 	return client, boards
+
+
+def get_boards_filter(default: BoardsFilter = None) -> BoardsFilter:
+	boards_filter: BoardsFilter
+	if len(sys.argv) == 1:
+		boards_filter = default
+	else:
+		boards_filter = sys.argv[1:]
+
+	return boards_filter
 
 
 def filter_boards(all_boards: list[Board], boards_filter: BoardsFilter, filter_out_closed_boards: bool = True) -> list[Board]:

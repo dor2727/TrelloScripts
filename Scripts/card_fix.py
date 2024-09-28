@@ -1,9 +1,18 @@
 #!/usr/bin/env python3
 import os
-import sys
 
 from trello import Card, Label
-from TrelloScripts.utils import BoardsFilter, get_first_attachment, get_item, is_url, iterate_cards, log, read_link, requires_lables, set_verbose
+from TrelloScripts.utils import (
+	get_boards_filter,
+	get_first_attachment,
+	get_item,
+	is_url,
+	iterate_cards,
+	log,
+	read_link,
+	requires_lables,
+	set_verbose,
+)
 
 
 def main() -> None:
@@ -12,17 +21,8 @@ def main() -> None:
 	iterate_cards(
 		log_name=os.path.splitext(os.path.basename(__file__))[0],
 		apply_to_card=[move_description_url_to_attachment, move_title_url_to_attachment, fix_null_title, strip_title],
-		boards_filter=_get_boards_filter(),
+		boards_filter=get_boards_filter(),
 	)
-
-
-def _get_boards_filter() -> BoardsFilter:
-	if len(sys.argv) == 1:
-		boards_filter = None  # all boards
-	else:
-		boards_filter = sys.argv[1:]
-
-	return boards_filter
 
 
 def _print_card(card: Card) -> None:

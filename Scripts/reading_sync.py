@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from functools import cached_property
 
 from trello import Board, Card, Label, List
-from TrelloScripts.utils import _init, get_item, is_labeled, log
+from TrelloScripts.utils import _init, get_boards_filter, get_item, is_labeled, log
 
 SUFFIX_BACKLOG = "Backlog"
 SUFFIX_DONE = "Done"
@@ -23,7 +23,7 @@ LABEL_COLOR = {
 
 
 def main() -> None:
-	client, all_boards = _init("reading_sync", boards_filter=None)
+	client, all_boards = _init("reading_sync", boards_filter=get_boards_filter())
 
 	board_groups = [_get_board_groups(b, all_boards) for b in all_boards]
 

@@ -1,5 +1,5 @@
 from .consts import MAIN_FOLDER
-from .iteration import iterate_boards, iterate_cards, requires_lables, BoardsFilter, _init
+from .iteration import iterate_boards, iterate_cards, requires_lables, BoardsFilter, _init, get_boards_filter
 from .log import log, set_logfile, log_initialize, set_verbose
 from .utils_trello import get_item, get_first_attachment, get_client, get_all_boards, is_labeled
 from .utils_web import is_url
