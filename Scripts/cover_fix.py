@@ -11,7 +11,7 @@ def main() -> None:
 	iterate_cards(
 		log_name=os.path.splitext(os.path.basename(__file__))[0],
 		apply_to_card=[set_card_cover],
-		boards_filter=get_boards_filter(default=["cooking", "youtube", "games", "courses", "dr k", "books", "podcasts", "chen"]),
+		boards_filter=get_boards_filter(default=["cooking", "youtube", "courses", "dr k", "books", "podcasts", "chen"]),
 	)
 
 
