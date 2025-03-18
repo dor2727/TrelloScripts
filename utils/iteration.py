@@ -4,11 +4,11 @@ from typing import Callable
 
 from trello import Board, Card, TrelloClient
 from TrelloScripts.utils.log import log, log_initialize, set_logfile
-from TrelloScripts.utils.utils_trello import get_all_boards, get_client
+from TrelloScripts.utils.utils_trello import get_all_boards, get_client, get_item
 
 Args = tuple
 
-BoardsFilter = Callable[[Board], bool] | list[str] | None
+BoardsFilter = Callable[[Board], bool] | list[str] | str | None
 
 
 def iterate_boards(
@@ -107,6 +107,8 @@ def get_boards_filter(default: BoardsFilter = None) -> BoardsFilter:
 def filter_boards(all_boards: list[Board], boards_filter: BoardsFilter, filter_out_closed_boards: bool = True) -> list[Board]:
 	if boards_filter is None:
 		boards_list = all_boards
+	elif isinstance(boards_filter, str):
+		boards_list = [get_item(all_boards, boards_filter)]
 	elif isinstance(boards_filter, list):
 		boards_list = get_boards_by_name(all_boards, boards_filter)
 	elif callable(boards_filter):
