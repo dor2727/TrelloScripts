@@ -69,12 +69,22 @@ class BoardGroup:
 
 
 def _get_board_groups(b: Board, all_boards: list[Board]) -> BoardGroup:
-	return BoardGroup(
-		main=b,
-		backlog=get_item(all_boards, f"{b.name} - {SUFFIX_BACKLOG}"),
-		done=get_item(all_boards, f"{b.name} - {SUFFIX_DONE}"),
-		took_inspiration=get_item(all_boards, f"{b.name} - {SUFFIX_TOOK_INSPIRATION}"),
-	)
+	if b.name in ["Books - Need Research", "Books - To Buy"]:
+		group = BoardGroup(
+			main=b,
+			backlog=get_item(all_boards, "Books - Backlog"),
+			done=get_item(all_boards, "Books - bought"),
+			took_inspiration=None,
+		)
+	else:
+		group = BoardGroup(
+			main=b,
+			backlog=get_item(all_boards, f"{b.name} - {SUFFIX_BACKLOG}"),
+			done=get_item(all_boards, f"{b.name} - {SUFFIX_DONE}"),
+			took_inspiration=get_item(all_boards, f"{b.name} - {SUFFIX_TOOK_INSPIRATION}"),
+		)
+
+	return group
 
 
 @dataclass
