@@ -19,7 +19,7 @@ def iterate_boards(
 	post_iteration: Callable[[Args], None] | None = None,
 	filter_out_old_boards: bool = True,
 ) -> None:
-	client, boards = _init(log_name, boards_filter, filter_out_old_boards=filter_out_old_boards)
+	client, boards, _ = _init(log_name, boards_filter, filter_out_old_boards=filter_out_old_boards)
 
 	# pre-iteration
 	if pre_iteration is not None:
@@ -47,7 +47,7 @@ def iterate_cards(
 	skip_archived: bool = True,
 	filter_out_old_boards: bool = True,
 ) -> None:
-	_, boards = _init(log_name, boards_filter, filter_out_old_boards=filter_out_old_boards)
+	_, boards, _ = _init(log_name, boards_filter, filter_out_old_boards=filter_out_old_boards)
 
 	log("[*] Iterating cards")
 	for board in boards:
@@ -77,7 +77,7 @@ def requires_lables(func: Callable) -> Callable:
 #
 # Utils
 #
-def _init(log_name: str, boards_filter: BoardsFilter = None, filter_out_old_boards: bool = True) -> tuple[TrelloClient, list[Board]]:
+def _init(log_name: str, boards_filter: BoardsFilter = None, filter_out_old_boards: bool = True) -> tuple[TrelloClient, list[Board], list[Board]]:
 	# init logging
 	set_logfile(log_name)
 	log_initialize()
@@ -91,7 +91,7 @@ def _init(log_name: str, boards_filter: BoardsFilter = None, filter_out_old_boar
 	if filter_out_old_boards:
 		boards = list(filter(lambda b: not re.search("\\bold\\b", b.name), boards))
 
-	return client, boards
+	return client, boards, all_boards
 
 
 def get_boards_filter(default: BoardsFilter = None) -> BoardsFilter:

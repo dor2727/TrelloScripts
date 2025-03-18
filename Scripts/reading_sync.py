@@ -23,9 +23,9 @@ LABEL_COLOR = {
 
 
 def main() -> None:
-	client, all_boards = _init("reading_sync", boards_filter=get_boards_filter())
+	client, boards, all_boards = _init("reading_sync", boards_filter=get_boards_filter())
 
-	board_groups = [_get_board_groups(b, all_boards) for b in all_boards]
+	board_groups = [_get_board_groups(b, all_boards) for b in boards]
 
 	for board_group in filter(bool, board_groups):
 		sync_boards(board_group)
