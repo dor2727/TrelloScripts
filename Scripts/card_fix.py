@@ -60,7 +60,10 @@ def fix_null_title(card: Card) -> None:
 		attachment = get_first_attachment(card)
 		if "url" in attachment:
 			new_title = read_link(attachment["url"])
-			card.set_name(new_title)
+			if new_title is None:
+				log(f"......[w] Unable to fetch new title. aborting. card : {card.name}\n")
+			else:
+				card.set_name(new_title)
 		else:
 			log(f"......[w] Unable to find new title. aborting. card : {card.name}\n")
 
