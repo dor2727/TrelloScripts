@@ -1,0 +1,290 @@
+### Etho
+	## Etho HC-7
+		main(
+			# pick_board=lambda boards: next(filter(lambda b: "youtube - minecraft" in b.name.lower(), boards)),
+			pick_board=_create_find_in("youtube - minecraft"),
+			pick_list=None,
+			pick_card=_create_find_in("ethoslab - season 7"),
+			playlist_url="https://www.youtube.com/playlist?list=PLaAVDbMg_XAoTkSw42KSc-pl7rG9Hr95v",
+			format_video_print=generic_format_video_print,
+			checklist_name="Checklist",
+		)
+	## Etho HC-5
+		main(
+			pick_board=_create_find_in("youtube - minecraft"),
+			pick_list=None,
+			pick_card=_create_find_in("ethoslab - season 5"),
+			playlist_url=None,
+			format_video_print=generic_format_video_print,
+			checklist_name="Checklist",
+			item_state=True,
+		)
+	## Etho HC-4
+		main(
+			pick_board=_create_find_in("youtube - minecraft"),
+			pick_list=None,
+			pick_card=_create_find_in("ethoslab - season 4"),
+			playlist_url=None,
+			format_video_print=generic_format_video_print,
+			checklist_name="Checklist",
+			item_state=True,
+		)
+	## Etho HC-3
+		main(
+			pick_board=_create_find_in("youtube - minecraft"),
+			pick_list=None,
+			pick_card=_create_find_in("ethoslab - season 3"),
+			playlist_url=None,
+			format_video_print=generic_format_video_print,
+			checklist_name="Checklist",
+			item_state=True,
+		)
+	# Etho old
+		for card_name in ["mindcrack season 1", "mindcrack season 2", "modded minecraft 1", "modded minecraft 2"]:
+			main(
+				pick_board=_create_find_in("youtube - minecraft"),
+				pick_list=_create_find_in("old etho"),
+				pick_card=_create_find_in(card_name),
+				playlist_url=None,
+				format_video_print=generic_format_video_print,
+				checklist_name="Checklist",
+				item_state=range(10) if card_name == "mindcrack season 1" else None,
+			)
+
+### HC-10
+	## Etho HC-10
+		main(
+			pick_board=_create_find_in("youtube - minecraft"),
+			pick_list=_create_find_in("10"),
+			pick_card=_create_find_in("ethoslab"),
+			playlist_url=None,
+			format_video_print=lambda v_id, v_seconds, v_title, v_url: f"S10E{int(v_id):02d}: ({v_seconds // 60}min): {v_url}",
+			checklist_name="Checklist",
+			item_state=True,
+		)
+	# Joel HC-10
+		main(
+			pick_board=_create_find_in("youtube - minecraft"),
+			pick_list=_create_find_in("10"),
+			pick_card=_create_find_in("joel smallishbeans"),
+			playlist_url=None,
+			format_video_print=lambda v_id, v_seconds, v_title, v_url: f"S10E{int(v_id):02d}: ({v_seconds // 60}min): {v_url}",
+			checklist_name="Checklist",
+			item_state=True,
+		)
+	## Pearl HC-10
+		main(
+			pick_board=_create_find_in("youtube - minecraft"),
+			pick_list=_create_find_in("10"),
+			pick_card=_create_find_in("pearlescentmoon"),
+			playlist_url=None,
+			format_video_print=lambda v_id, v_seconds, v_title, v_url: f"S10E{int(v_id):02d}: ({v_seconds // 60}min): {v_url}",
+			checklist_name="Checklist",
+			item_state=None,
+		)
+	# Grian HC-10
+		main(
+			pick_board=_create_find_in("youtube - minecraft"),
+			pick_list=_create_find_in("10"),
+			pick_card=_create_find_in("grian"),
+			playlist_url=None,
+			format_video_print=lambda v_id, v_seconds, v_title, v_url: f"S10E{int(v_id):02d}: ({v_seconds // 60}min): {v_url}",
+			checklist_name="Checklist",
+			item_state=None,
+		)
+
+### HC-9
+	for card_name in ["ethoslab", "pearlescentmoon", "geminitay"]:
+		main(
+			pick_board=_create_find_in("youtube - minecraft"),
+			pick_list=_create_find_in("9"),
+			pick_card=_create_find_in(card_name),
+			playlist_url=None,
+			format_video_print=lambda v_id, v_seconds, v_title, v_url: f"S09E{int(v_id):02d}: ({v_seconds // 60}min): {v_url}",
+			checklist_name="Checklist",
+			item_state=None,
+		)
+
+### HC-8
+	format_season_8 = lambda v_id, v_seconds, v_title, v_url: f"S08E{int(v_id):02d}: ({v_seconds // 60}min): {v_url}"
+	for card_name in ["ethoslab", "tango", "grain"]:
+		main(
+			pick_board=_create_find_in("youtube - minecraft"),
+			pick_list=_create_find_in("8"),
+			pick_card=_create_find_in(card_name),
+			playlist_url=None,
+			format_video_print=format_season_8,
+			checklist_name="Checklist",
+			item_state=None,
+		)
+	main(
+		pick_board=_create_find_in("youtube - minecraft"),
+		pick_list=_create_find_in("8"),
+		pick_card=_create_find_in("pearl"),
+		playlist_url=None,
+		format_video_print=format_season_8,
+		checklist_name="Checklist",
+		item_state=range(13),
+	)
+	main(
+		pick_board=_create_find_in("youtube - minecraft"),
+		pick_list=_create_find_in("8"),
+		pick_card=_create_find_in("gemini"),
+		playlist_url=None,
+		format_video_print=format_season_8,
+		checklist_name="Checklist",
+		item_state=range(11),
+	)
+
+## Old Hermitcraft
+	main(
+		pick_board=_create_find_in("youtube - minecraft"),
+		pick_list=_create_find_in("tango"),
+		pick_card=_create_find_in("7"),
+		playlist_url=None,
+		format_video_print=lambda v_id, v_seconds, v_title, v_url: f"S07E{int(v_id):02d}: ({v_seconds // 60}min): {v_url}",
+		checklist_name="Checklist",
+		item_state=None,
+	)
+
+## Life series - wild life
+	main(
+		pick_board=_create_find_in("youtube - minecraft"),
+		pick_list=_create_find_in("wild life"),
+		pick_card=True,
+		playlist_url=None,
+		format_video_print=generic_format_video_print,
+		checklist_name="Checklist",
+		item_state=None,
+	)
+## Life series
+	# added a patch to ignore "etho" cards"
+	for list_name in ["secret life", "limited life", "double life", "last life", "3rd life"]:
+		main(
+			pick_board=_create_find_in("youtube - minecraft"),
+			pick_list=_create_find_in(list_name),
+			pick_card=True,
+			playlist_url=None,
+			format_video_print=generic_format_video_print,
+			checklist_name="Checklist",
+			item_state=None,
+		)
+	## Etho
+		main(
+			pick_board=_create_find_in("youtube - minecraft"),
+			pick_list=_create_find_in("secret life"),
+			pick_card=_create_find_in("etho"),
+			playlist_url=None,
+			format_video_print=generic_format_video_print,
+			checklist_name="Checklist",
+			item_state=None,
+			item_slice=range(29-1, 36),  # 29 to 36, inclusive, converted to zero-based
+		)
+		main(
+			pick_board=_create_find_in("youtube - minecraft"),
+			pick_list=_create_find_in("limited life"),
+			pick_card=_create_find_in("etho"),
+			playlist_url=None,
+			format_video_print=generic_format_video_print,
+			checklist_name="Checklist",
+			item_state=None,
+			item_slice=range(22-1, 28),  # 22 to 28, inclusive, converted to zero-based
+		)
+		main(
+			pick_board=_create_find_in("youtube - minecraft"),
+			pick_list=_create_find_in("double life"),
+			pick_card=_create_find_in("etho"),
+			playlist_url=None,
+			format_video_print=generic_format_video_print,
+			checklist_name="Checklist",
+			item_state=None,
+			item_slice=range(16-1, 21),  # 16 to 21, inclusive, converted to zero-based
+		)
+		main(
+			pick_board=_create_find_in("youtube - minecraft"),
+			pick_list=_create_find_in("last life"),
+			pick_card=_create_find_in("etho"),
+			playlist_url=None,
+			format_video_print=generic_format_video_print,
+			checklist_name="Checklist",
+			item_state=None,
+			item_slice=range(8-1, 18),  # 8 to 18, inclusive, converted to zero-based
+		)
+		main(
+			pick_board=_create_find_in("youtube - minecraft"),
+			pick_list=_create_find_in("3rd life"),
+			pick_card=_create_find_in("etho"),
+			playlist_url=None,
+			format_video_print=generic_format_video_print,
+			checklist_name="Checklist",
+			item_state=None,
+			item_slice=range(1-1, 7),  # 1 to 7, inclusive, converted to zero-based
+		)
+
+## empires
+	for list_name in ["empires 1", "empires 2"]:
+		main(
+			pick_board=_create_find_in("youtube - minecraft"),
+			pick_list=_create_find_in(list_name),
+			pick_card=_create_find_in("lizzie"),
+			playlist_url=None,
+			format_video_print=generic_format_video_print,
+			checklist_name="Checklist",
+			item_state=True,
+		)
+		main(
+			pick_board=_create_find_in("youtube - minecraft"),
+			pick_list=_create_find_in(list_name),
+			pick_card=_create_find_in("joel"),
+			playlist_url=None,
+			format_video_print=generic_format_video_print,
+			checklist_name="Checklist",
+			item_state=None,
+		)
+
+## More etho
+	main(
+		pick_board=_create_find_in("youtube - minecraft"),
+		pick_list=_create_find_in("old etho"),
+		pick_card=True,
+		playlist_url=None,
+		format_video_print=generic_format_video_print,
+		checklist_name="Checklist",
+		item_state=None,
+		add_duration_to_card_name=True,
+		exclude_cards=["mindcrack", "modded minecraft 1", "modded minecraft 2"],
+	)
+
+## single player
+	main(
+		pick_board=_create_find_in("youtube - minecraft"),
+		pick_list=_create_find_in("single player"),
+		pick_card=True,
+		playlist_url=None,
+		format_video_print=generic_format_video_print,
+		checklist_name="Checklist",
+		item_state=None,
+	)
+
+## mumbo
+	main(
+		pick_board=_create_find_in("youtube - minecraft"),
+		pick_list=_create_find_in("10"),
+		pick_card=_create_find_in("mumbo"),
+		playlist_url=None,
+		format_video_print=lambda v_id, v_seconds, v_title, v_url: f"S10E{int(v_id):02d}: ({v_seconds // 60}min): {v_url}",
+		checklist_name="Checklist",
+		item_state=None,
+	)
+
+## grian
+	for season in ('9', '7'):
+		main(
+			pick_board=_create_find_in("youtube - minecraft"),
+			pick_list=_create_find_in(season),
+			pick_card=_create_find_in("grian"),
+			playlist_url=None,
+			format_video_print=lambda v_id, v_seconds, v_title, v_url: f"S10E{int(v_id):02d}: ({v_seconds // 60}min): {v_url}",
+			checklist_name="Checklist",
+			item_state=None,
+		)
